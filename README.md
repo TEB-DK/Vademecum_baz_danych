@@ -1,3 +1,5 @@
+![obraz-removebg-preview(17)](https://user-images.githubusercontent.com/125214141/219492076-34c6b650-b361-473d-8b09-8826d0141654.png)
+
 <div align="center"><h1>📘 Vademecum baz danych 📘</h1></div>
 
 podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycznym. Znajomość tych zagadnień jest **_obowiązkowa_**. 
