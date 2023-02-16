@@ -1,7 +1,7 @@
 <div align="center"><h1>📘 Vademecum baz danych 📘</h1></div>
 
 podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycznym. Znajomość tych zagadnień jest **_obowiązkowa_**. 
-  ## Podstawowe pojęcia
+  ## 📚 Podstawowe pojęcia
   
   ### Baza danych
   > zbiór powiązanych ze sobą informacji, zorganizowany w określoną strukturę.
