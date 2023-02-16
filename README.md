@@ -125,7 +125,7 @@ podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycz
   ```
   
   ### Procedura
-  > pozwalają zdefiniować dowolne zapytanie i wywołać je za pomocą komendy EXEC nazwa_procedury. Zmienne lokalne, globalne i parametry funkcji i procedur oznaczamy poprzez ``@`` i typ zmiennej.
+  > pozwalają zdefiniować dowolne zapytanie i wywołać je za pomocą komendy ``EXEC`` nazwa_procedury. Zmienne lokalne, globalne i parametry funkcji i procedur oznaczamy poprzez ``@`` i typ zmiennej.
   
   > <div align="right"><sub>1.9 Listing - Przykładowa procedura</sub></div>
   ```sql
