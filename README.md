@@ -1,55 +1,6 @@
-<div align="center"><h1>📘 Vademecum baz danych 📘</h1></div>
+<div align="center"><h1>📝 Zapytania SQL (DML) 📝</h1></div>
 
-podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycznym. Znajomość tych zagadnień jest **_obowiązkowa_**. 
-  ## 📚 Podstawowe pojęcia
-  
-  ### Baza danych
-  > zbiór powiązanych ze sobą informacji, zorganizowany w określoną strukturę.
-  
-  ### Rodzaje baz danych
-  > - ``Nierelacyjne`` – baza danych, która nie korzysta ze schematu tabelarycznego wierszy i kolumn znalezionych w większości tradycyjnych systemów baz danych. Zamiast tego nierelacyjne bazy danych używają modelu magazynu zoptymalizowanego pod kątem określonych wymagań dotyczących typu przechowywanych danych. Na przykład dane mogą być przechowywane jako proste pary klucz/wartość, dokumenty ``JSON`` lub jako graf składający się z krawędzi i wierzchołków.
-  > - ``Relacyjne`` – dane gromadzone, przetwarzane i przechowywane za pomocą komputera. Dane umieszczone w tabelach (przynajmniej dwóch) pozostających w ścisłym związku z sobą.
-  
-  ### System zarządzania bazami danych
-  > to program komputerowy, który służy do przechowywania i modyfikowania danych, np. Acces (Microsoft Office), Base (OpenOffice).
-  
-  ### Encja
-  > to uporządkowany zbiór danych, przechowywanych w ujednolicony sposób. Dane w tabeli mogą być poddawane różnym operacjom: przeglądane, wyszukiwane, zamieniane, zaznaczane, kopiowane, usuwane.
-  
-  ### Krotka
-  > wiersz w tabeli opisuje informacje o jednym obiekcie. Wiersz składa się z pól opisujących cechy obiektu (atrybutów).
-  
-  ### Atrybut
-  > jest to kolumna zawierająca dane jednego określonego typu.
-  
-  ### Kwerenda
-  > to zapytanie umożliwiające wyświetlenie pól i rekordów z tabel według kryterium ustalonego przez użytkownika. Kwerenda służy też do porządkowania danych, wykonywania obliczeń i aktualizacji danych.
-  
-  ### Formularz
-  > to obiekt, który upraszcza proces wprowadzania i aktualizacji danych.
-  
-  ### Raport
-  > to prezentacja wybranych informacji z bazy danych. Raporty wykonuje się zazwyczaj w formie wydruku.
-  
-  ### Relacje (związki)
-  > to zależności między tabelami umożliwiające ich logiczne powiązanie ze sobą.
-
-  > Typy relacji:
-  > - ``Jeden-do-jednego`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowany dokładnie jeden rekord drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowany dokładnie jeden rekord pierwszej tabeli, np. jeden przelew bankowy ma przyporządkowany jeden kod jednorazowy i odwrotnie.
-  > - ``Jeden-do-wielu`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowanych wiele rekordów drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowany dokładnie jeden rekord pierwszej tabeli, np. jeden wychowawca ma wielu uczniów, ale uczeń ma jednego wychowawcę.
-  > - ``Wiele-do-wielu`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowanych wiele rekordów drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowanych wiele rekordów pierwszej tabeli, np. jeden nauczyciel uczy wielu uczniów, a każdy uczeń ma wielu nauczycieli.
-  
-  ### Klucz główny (podstawowy)
-  > to unikatowa nazwa pola (używa się nazwy ID – np. ID imię)- typ pola autonumerowanie. Każdy rekord w tabeli musi mieć swój unikatowy numer.
-  
-  ### Klucz obcy
-  > atrybut jest kluczem obcym dla danej tabeli, jeśli nie jest jej kluczem podstawowym, ale jej wartości są wartościami klucza podstawowego innej tabeli.
- 
-  ### Typy danych
-  > - Liczby całkowite - ``INT``, ``TINYINT``.
-  > - Liczby rzeczywiste - ``FLOAT``, ``DECIMAL``
-  > - Czasowe - ``DATETIME``, ``DATE``, ``TIME``.
-  > - Ciągi znaków - ``CHAR``, ``VARCHAR``, ``BLOB``
+  ## 🧠 Przypomnienie
 
   ### Język manipulacji danych (ang. ``Data Manipulation Language``)
   > zbiór instrukcji języka zapytań używanych do przetwarzania danych z bazy danych. Są to instrukcje takie jak: ``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE``.
@@ -58,7 +9,7 @@ podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycz
   ```sql
   SELECT atrybut FROM nazwa_tabeli  
   WHERE [warunki_wyszukiwania] 
-  ORDER BY [ASC / DESC], 
+  ORDER BY atrybut [ASC / DESC], 
   LIMIT ilość_wierszy;
   ```
 
@@ -70,69 +21,252 @@ podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycz
 
   > <div align="right"><sub>1.3 Listing - Przykładowa składnia instrukcji UPDATE</sub></div>
   ```sql
-  UPDATE nazwa_tabeli SET atrybut = 'nowa_wartość' WHERE [warunek_wyszukania];
+  UPDATE nazwa_tabeli SET atrybut = 'nowa_wartość' 
+  WHERE [warunek_wyszukania];
   ```
 
   > <div align="right"><sub>1.4 Listing - Przykładowa składnia instrukcji DELETE</sub></div>
   ```sql
   DELETE FROM nazwa_tabeli WHERE [warunek_wyszukania];
   ```
+  
+---
 
-  ### Język definicji danych (ang. ``Data Definition Language``)
-  > zbiór instrukcji języka zapytań używanych do definiowania struktur danych. Możemy do nich zaliczyć polecenia takie jak ``CREATE``, ``ALTER``, ``DROP``. Za pomocą instrukcji ``DDL`` osoba nie manipuluje bezpośrednio danymi, a ich strukturą. Można zdefiniować kolumny tabel, zmienić typy danych, czy usunąć obiekt taki jak widok, czy tabela.
+  ## 📽️ Zapytania ``SELECT``
+  > Zapytanie SELECT jest wykorzystywane do wybierania (``projekcji``) danych z bazy. Z pozoru łatwe zagadnienie zapytania może jednak przysporzyć wiele kłopotów jeśli zgłebimy je dokładnie, szczególnie używając ``podzapytań SELECT``, ``złożonych warunków filtrowania WHERE``, czy chociażby funkcji obliczeniowych - grupujących (agregujących), takich jak ``COUNT``,``AVG``,``SUM``,``MIN``,``MAX``.
 
-  > <div align="right"><sub>1.5 Listing - Przykładowa składnia instrukcji CREATE</sub></div>
+  #### ORDER BY
+  > Słowo kluczowe (syntaktyczne) wykorzystywane do sortowania wyników rosnąco lub malejąco na podstawie konkretnego atrybutu tabeli.
+  
+  > <div align="right"><sub>1.4 Listing - Przykładowe sortowanie wyników rosnąco i malejąco</sub></div>
+
   ```sql
-  CREATE DATABASE nazwa_bazy;
+  SELECT FirstName FROM Employees ORDER BY EmployeeID ASC
 
-  CREATE TABLE nazwa_tabeli (
-    [ struktura_tabeli ]
-  );
+  SELECT FirstName FROM Employees ORDER BY EmployeeID DESC
+  ```
+  ``ASC`` - Sortowanie rosnące (z ang. ``ascending``)
+
+  ``DESC`` - Sortowanie malejące (z ang. ``descending``)
+
+  Listing 1.4 przedstawia wybranie atrybutu ``FirstName`` z tabeli ``Employees`` sortując je najpierw rosnąco po atrybucie ``EmployeeID``. Sortowania można dokonać po przez dowolny atrybut, nawet typu ``VARCHAR``.
+
+  #### DISTINCT
+  > Polecenie następujące po ``SELECT`` oznajmiające w zapytaniu, aby zwróciło tylko różniące się od siebie wyniki, innymi słowy redukuje ilość wyników do takich, które się nie powtarzają.
+
+  > <div align="right"><sub>1.5 Listing - Przykładowe zastosowanie DISTINCT</sub></div>
+  ```sql
+  SELECT OrderID FROM OrderDetails
+  ```
+  ![Bez distinct](https://user-images.githubusercontent.com/125214141/221034358-0e52ab3b-7ac1-460f-b226-99b9e0cc8c1e.png)
+
+
+  ```sql
+  SELECT DISTINCT OrderID FROM OrderDetails
+  ```
+  ![Z distinct](https://user-images.githubusercontent.com/125214141/221034552-62c2b5b0-27bc-425e-840d-2a990632c07a.png)
+
+  #### NOT, AND i OR, IN
+  > Operatory służące głównie do klauzuli ``WHERE``, dzięki którym możliwe jest zdefiniowanie więcej niż jednego warunku wyszukiwania.
+  
+  > <div align="right"><sub>1.6 Listing - Zastosowanie operatora AND i OR</sub></div>
+  ```sql
+  SELECT * FROM Customers 
+  WHERE Country = "Germany" AND City = "Berlin" OR City = "Aachen"
   ```
 
-  > <div align="right"><sub>1.6 Listing - Przykładowa składnia instrukcji ALTER</sub></div> 
+  W wolnym tłumaczeniu możemy przeczytać warunek logiczny wyszukiwania w ten sposób: Znajdz wszystkich klientów ``GDZIE ich kraj to Germany I miasto to Berlin ORAZ miasto to Aachen``.
+
+  > <div align="right"><sub>1.7 Listing - Zastosowanie operatora NOT</sub></div>
   ```sql
-  ALTER TABLE nazwa_tabeli [ADD / MODIFY / RENAME / DROP] atrybut;
+  SELECT * FROM Customers
+  WHERE NOT Country = "UK"
   ```
 
-  > <div align="right"><sub>1.7 Listing - Przykładowa składnia instrukcji DROP</sub></div>
-  ```sql
-  DROP TABLE nazwa_tabeli;
+  Natomiast operator ``NOT`` powoduje wykluczenie ze zbioru pasujących elementów jednego konkretnego elementu, bądź całej "listy" elementów, którą można zastosować za pomocą operatora ``IN``.
 
-  DROP DATABASE nazwa_bazy;
+  Jak możemy zauważyć na listingach 1.6 oraz 1.7, operatory logiczne są całkiem elastyczne jeśli chodzi o zastosowanie, niektóre z tych logik możemy zastosować za pomocą operatora ``IN``. Na przykład listing 1.6 możemy zapisać w ten sposób:
+
+  > <div align="right"><sub>1.8 Listing - Wykorzystanie operatora IN</sub></div>
+  ```sql
+  SELECT * FROM Customers
+  WHERE Country = "Germany" AND City IN ("Berlin", "Aachen")
   ```
 
-  ### Wyzwalacz
-  > jest to skrypt (fragment kodu) wykonywany w przypadku zajścia jakiegoś zdarzenia w bazie danych (np. dodania danych, ich modyfikacji, czy usunięcia).
+  Operator ten wykorzystywany jest do zastosowania listy elementów, które można albo uwzględnić w wyszukiwaniu, albo je wykluczyć.
   
-  > Typy wyzwalaczy:
-  > - ``AFTER DELETE`` – wykonanie wyzwalacza po operacji usunięcia rekordu.
-  > - ``AFTER INSERT`` – wykonanie wyzwalacza po dodaniu rekordu.
-  > - ``AFTER UPDATE`` – wykonanie wyzwalacza po zmodyfikowaniu rekordu.
-
-  > - ``BEFORE DELETE`` – wykonanie wyzwalacza przed operacji usunięcia rekordu.
-  > - ``BEFORE INSERT``  – wykonanie wyzwalacza przed dodaniu rekordu.
-  > - ``BEFORE UPDATE`` – wykonanie wyzwalacza przed zmodyfikowaniu rekordu.
-  
-  > <div align="right"><sub>1.8 Listing - Przykładowa składnia wyzwalacza</sub></div>
+  > <div align="right"><sub>1.9 Listing - Wykorzystanie operatora NOT wraz z operatorem IN</sub></div>
   ```sql
-  CREATE TRIGGER nazwa_wyzwalacza
-  BEFORE INSERT ON
-  nazwa_tabeli 
-  FOR EACH ROW BEGIN
-  ...  
-  END
+  SELECT * FROM Customers
+  WHERE Country = "Germany" AND City NOT IN ("Berlin", "Aachen")
   ```
   
-  ### Procedura
-  > pozwalają zdefiniować dowolne zapytanie i wywołać je za pomocą komendy ``EXEC`` nazwa_procedury. Zmienne lokalne, globalne i parametry funkcji i procedur oznaczamy poprzez ``@`` i typ zmiennej.
-  
-  > <div align="right"><sub>1.9 Listing - Przykładowa procedura</sub></div>
-  ```sql
-  CREATE PROCEDURE nazwa_procedury @zmienna int
-  AS
-  SELECT * FROM nazwa_tabeli WHERE id = @zmienna;
+  Zapytanie zwróci nam wszystkich klientów z kraju Germany oraz miast wszystkich poza Berlinem oraz Aachen.
 
-  EXEC nazwa_procedury 10
+  #### GROUP BY
+  > Deklaracja oznaczająca grupowanie krotek z tym samym typem wartości w podsumowujący wiersz. Często również słowo kluczowe ``GROUP BY`` wykorzystywane jest do funkcji agregujących takich jak ``COUNT``,``MAX``,``MIN``,``SUM`` czy ``AVG``.
+
+  Przykładowym zastosowaniem GROUP BY jest grupowanie konkretnej kolumny wzgledem drugiej. Na przykład: Zliczenie ilości zamówień danego dnia, by to uczynić musimy użyć funkcji COUNT oraz GROUP BY. Projekcja wyników będzie sensowna tylko wtedy gdy uwzględnimy liczbę zamówień oraz datę.
+  > <div align="right"><sub>1.10 Listing - Wykorzystanie GROUP BY wraz z funkcją agregującą COUNT</sub></div>
+  ```sql
+  SELECT COUNT(OrderID), OrderDate FROM Orders 
+  GROUP BY OrderDate
   ```
+  Wyniki są pogrupowane względem daty zamówienia, więc funkcja COUNT będzie oznaczać jedynie zsumowanie ilości ID do danego dnia, co po przetłumaczeniu na normalny język będzie znaczyło: Danego dnia ilość zamówień wynosiła [tutaj wartość z COUNT(OrderID)].
+
+  Aby nasza projekcja była bardziej czytelna możemy zastosować ``alias``, deklaracją ``as`` zaraz po atrybucie.
+
+  > <div align="right"><sub>1.11 Listing - Zastosowanie aliasu w zapytaniu agregującym</sub></div>
+  ```sql
+  SELECT 
+  COUNT(OrderID) as Ilosc_zamowien, 
+  OrderDate as Data_zamowienia
+  FROM Orders 
+  GROUP BY Data_zamowienia
+  ```
+
+  Dzięki zastosowaniu ``aliasu`` czyli nazwy zastępczej możemy również wykorzystać ją w dowolnym miejscu zapytania, tak jak ma to miejsce w ``GROUP BY``. Nazwy atrybutów przyjmują wtedy nazwy aliasowe więc i wykorzystanie tych nazw jest jak najbardziej poprawne.
+
+
+  #### COUNT, AVG, SUM
+  > Zbiór funkcji agregujących.
+
+  - ``COUNT`` - Zliczanie wszystkich krotek danego atrybutu.
+
+    > <div align="right"><sub>1.12 Listing - Użycie funkcji COUNT do zliczenia wszystkich krotek atrybutu Price</sub></div>
+    ```sql
+    SELECT COUNT(Price) FROM Products
+    ```
+
+  - ``AVG`` - Zliczenie średniej wartości krotek atrybutu numerycznego.
+
+    > <div align="right"><sub>1.13 Listing - Użycie funkcji AVG do wyliczenia średniej wartości ceny produktu ze wszystkich krotek</sub></div>
+    ```sql
+    SELECT AVG(Price) FROM Products
+    ```
+
+  - ``SUM`` - Zliczenie sumy krotek atrybutu numerycznego.
+    
+    > <div align="right"><sub>1.14 Listing - Użycie funkcji SUM do wyliczenia sumy całej kolumny Price</sub></div>
+    ```sql
+    SELECT SUM(Price) FROM Products      
+    ```
+
+
+  #### BETWEEN
+  > Operator zakresu, pozwala na wybranie wartości ``pomiędzy`` zadeklarowanymi.
+
+  Wykorzystwanie operatora zakresu następuje w polu warunku wyszukiwania. Wartości zakresu mogą być reprezentowane przez ``wartości liczbowe``, ``tekstowe`` lub ``wartości daty``.
+
+  > <div align="right"><sub>1.15 Listing - Wyświetlenie nazwy produktów gdzie id kategorii jest z zakresu [2,5]</sub></div>
+  ```sql
+  SELECT ProductName FROM Products 
+  WHERE CategoryID BETWEEN 2 AND 5
+  ```
+
+  #### LIKE
+  > Operator podobieństwa, stosowany w klauzuli ``WHERE`` i wykorzystywany do wyszukiwania po przez określony schemat w atrybucie.
   
+  > <div align="right"><sub>1.16 Listing - Symbole schematu operatora</sub></div>
+  | Symbol schematu operatora | Wyjaśnienie |
+  |:---:|:---:|
+  | % | Przedstawia zero lub więcej znaków |
+  | _ | Przedstawia dokładnie jeden dowolny znak |
+
+  > <div align="right"><sub>1.17 Listing - Przykładowe zastosowanie schematów operatora LIKE</sub></div>
+  | Schemat operatora | Wyjaśnienie |
+  |:---:  |:---:      |
+  |"tekst%" | Wyszukanie wszystkich wartości ``zaczynających`` się od "tekst"|
+  |"%tekst" | Wyszukanie wszystkich wartości ``kończących`` się na "tekst" |
+  |"tekst%xd" | Wyszukanie wszystkich wartości ``zaczynających`` się na "tekst" i ``kończących`` na "xd" |
+  |"%ess%"| Wyszukanie wszystkich wartości, które posiadają "ess" w ``dowolnym`` miejscu |
+  |"____era% | Wyszukanie wszystkich wartości, które posiadają "era" na 5 pozycji, słowem pasującym będzie np. "chillera" |
+  |"O_az%" | Wyszukanie wszystkich wartości, które zaczynają się na wyraz O_az z jedną dowolną literą na drugim miejscu, wynikami wyszukiwania będą na np. "Okaz", a także i "Oraz".
+  |"P_%_%" | Wyszukanie słowa, które zaczyna się na ``P`` i jest conajmniej ``3 literowe``, wynikami wyszukiwania mogą być np. Piwo, Paw"
+
+  Zastosowanie ``LIKE`` jest zazwyczaj związane z wyszukiwaniem konkretnego schematu tekstu, np. zaczynającego się na konkretne litery, bądź literę.
+
+  > <div align="right"><sub>1.18 Listing - Przykładowa składnia z wykorzystaniem operatora LIKE</sub></div>
+  ```sql
+  SELECT * FROM Customers
+  WHERE City LIKE "L_%_%_%_%_%"
+  ```
+
+  Na listingu 1.18 zaprezentowany został przykład wyszukujący klientów których nazwa miasta zaczyna się na literę ``L`` i jest conajmniej 6 literowa (5 dowolnych i zaczynająca się na L).
+
+
+  #### MIN i MAX
+  > Zbiór funkcji wybierających najmniejszą oraz największą wartość z kolumny.
+  
+  - ``MIN`` - funkcja zwracająca najmniejszą wartość w kolumnie.
+    
+    > <div align="right"><sub>1.19 Listing - Przykładowe użycie funkcji MIN</sub></div>
+    ```sql
+    SELECT MIN(Quantity) FROM OrderDetails      
+    ```
+  
+  - ``MAX`` - funkcja zwracająca największą wartość w kolumnie.
+    
+    > <div align="right"><sub>1.20 Listing - Przykładowe użycie funkcji MAX</sub></div>
+    ```sql
+    SELECT 
+    MAX(Quantity) as Najwieksza_ilosc,
+    ProductID 
+    FROM OrderDetails
+    GROUP BY ProductID ORDER BY Najwieksza_ilosc DESC LIMIT 1     
+    ```
+  
+
+  #### LIMIT
+  > Klauzula ograniczająca ilość wyników do projekcji. Szczególnie użyteczne dla dużych encji z tysiącami krotek, które są wybierane przez użytkowników.
+  
+  Zastosowanie tej klauzuli jest umiejscowione zawsze na samym końcu zapytania.
+
+  > <div align="right"><sub>1.21 Listing - Wykorzystanie klauzuli LIMIT w celu ograniczenia ilości wyników</sub></div>
+  ```sql
+  SELECT * FROM OrderDetails LIMIT 10
+  ```
+
+
+  ### 🌟 Zadania do wykonania
+  > Do wykonania tego poddziału wykorzystamy gotową bazę do nauki W3Schools, link poniżej.
+
+  [ 🔗 Przenieś mnie do krainy MySQL!](https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_all)
+  
+  1. Wybierz wszystkie krotki z tabeli ``Customers``, którzy są z miasta ``Walla``.
+        
+     - Zmodyfikuj powyższy podpunkt w następujący sposób: 
+
+       - Wybierz ``imiona klientów`` oraz ich ``adresy``.
+       - Zamień wyszukiwanie przez miasto, na wyszukiwanie przez kraj i wyszukaj klientów zamieszkujących ``Venezuele``.
+       - Posortuj to wyszukiwanie malejąco.
+       - Zlicz wszystkich klientów zamieszkujących ``Venezuele`` za pomocą funkcji ``COUNT``.
+
+  2. Wybierz wszystkie ``ID zamówień`` w tabeli ``OrderDetails``, których ilość przekracza ``21``.
+     
+     - Zmodyfikuj powyższy podpunkt w następujący sposób:
+
+       - Dodaj górne ograniczenie ilości w postaci nie przekraczania liczby ``37``.
+       - Wybierz tylko ``nie powtarzające`` się zamówienia.
+  
+  
+
+  ### Podzapytania
+  > Podzapytanie to zapytanie SQL, które umieszczone jest wewnątrz innego zapytania. Podzapytanie zawsze otoczone jest parą nawiasów ().
+
+  > Podzapytanie może występować praktycznie wszędzie wewnątrz zapytania SQL. To gdzie podzapytanie może być użyte uzależnione jest od tego ile wartości zwraca. Jeśli podzapytanie zwraca pojedynczą wartość może być użyte jako część wyrażenia – na przykład w porównaniach, czy zwracanych atrybutach.
+
+
+
+
+  ## Zapytania ``INSERT``
+  > in progress
+
+
+  ## Zapytania ``UPDATE``
+  > in progress
+
+
+
+  ## Zapytania ``DELETE``
+  > in progress
