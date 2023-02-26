@@ -248,6 +248,12 @@
 
        - Dodaj górne ograniczenie ilości w postaci nie przekraczania liczby ``37``.
        - Wybierz tylko ``nie powtarzające`` się zamówienia.
+       
+  3. Wyszukaj nazwę produktu, jednostkę oraz cene w tabeli ``Products``, których cena przekracza średnią cene wszystkich produktów. (W przykładzie występuje podzapytanie).
+     
+     - Zmodyfikuj powyższy podpunkt w następujący sposób:
+
+       - Dodatkowo muszą być to produkty, których jednostka to ``bottles`` (butelki) lub ``bags`` (worki).
   
   
 
