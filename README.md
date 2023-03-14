@@ -255,7 +255,7 @@
 
        - Dodatkowo muszą być to produkty, których jednostka to ``bottles`` (butelki) lub ``bags`` (worki).
   
-  
+  4. Zlicz liczbę zamówień dla każdego klienta w tabeli ``Orders``, wyniki posortuj malejąco względem liczby zamówień dokonanych przez klienta.
 
   ### Podzapytania
   > Podzapytanie to zapytanie SQL, które umieszczone jest wewnątrz innego zapytania. Podzapytanie zawsze otoczone jest parą nawiasów ().
