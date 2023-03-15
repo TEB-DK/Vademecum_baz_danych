@@ -35,7 +35,7 @@
   ## 📽️ Zapytania ``SELECT``
   > Zapytanie SELECT jest wykorzystywane do wybierania (``projekcji``) danych z bazy. Z pozoru łatwe zagadnienie zapytania może jednak przysporzyć wiele kłopotów jeśli zgłebimy je dokładnie, szczególnie używając ``podzapytań SELECT``, ``złożonych warunków filtrowania WHERE``, czy chociażby funkcji obliczeniowych - grupujących (agregujących), takich jak ``COUNT``,``AVG``,``SUM``,``MIN``,``MAX``.
 
-  #### ORDER BY
+  ### ORDER BY
   > Słowo kluczowe (syntaktyczne) wykorzystywane do sortowania wyników rosnąco lub malejąco na podstawie konkretnego atrybutu tabeli.
   
   > <div align="right"><sub>1.4 Listing - Przykładowe sortowanie wyników rosnąco i malejąco</sub></div>
@@ -51,7 +51,7 @@
 
   Listing 1.4 przedstawia wybranie atrybutu ``FirstName`` z tabeli ``Employees`` sortując je najpierw rosnąco po atrybucie ``EmployeeID``. Sortowania można dokonać po przez dowolny atrybut, nawet typu ``VARCHAR``.
 
-  #### DISTINCT
+  ### DISTINCT
   > Polecenie następujące po ``SELECT`` oznajmiające w zapytaniu, aby zwróciło tylko różniące się od siebie wyniki, innymi słowy redukuje ilość wyników do takich, które się nie powtarzają.
 
   > <div align="right"><sub>1.5 Listing - Przykładowe zastosowanie DISTINCT</sub></div>
@@ -66,7 +66,7 @@
   ```
   ![Z distinct](https://user-images.githubusercontent.com/125214141/221034552-62c2b5b0-27bc-425e-840d-2a990632c07a.png)
 
-  #### NOT, AND i OR, IN
+  ### NOT, AND i OR, IN
   > Operatory służące głównie do klauzuli ``WHERE``, dzięki którym możliwe jest zdefiniowanie więcej niż jednego warunku wyszukiwania.
   
   > <div align="right"><sub>1.6 Listing - Zastosowanie operatora AND i OR</sub></div>
@@ -103,7 +103,7 @@
   
   Zapytanie zwróci nam wszystkich klientów z kraju Germany oraz miast wszystkich poza Berlinem oraz Aachen.
 
-  #### GROUP BY
+  ### GROUP BY
   > Deklaracja oznaczająca grupowanie krotek z tym samym typem wartości w podsumowujący wiersz. Często również słowo kluczowe ``GROUP BY`` wykorzystywane jest do funkcji agregujących takich jak ``COUNT``,``MAX``,``MIN``,``SUM`` czy ``AVG``.
 
   Przykładowym zastosowaniem GROUP BY jest grupowanie konkretnej kolumny wzgledem drugiej. Na przykład: Zliczenie ilości zamówień danego dnia, by to uczynić musimy użyć funkcji COUNT oraz GROUP BY. Projekcja wyników będzie sensowna tylko wtedy gdy uwzględnimy liczbę zamówień oraz datę.
@@ -128,7 +128,7 @@
   Dzięki zastosowaniu ``aliasu`` czyli nazwy zastępczej możemy również wykorzystać ją w dowolnym miejscu zapytania, tak jak ma to miejsce w ``GROUP BY``. Nazwy atrybutów przyjmują wtedy nazwy aliasowe więc i wykorzystanie tych nazw jest jak najbardziej poprawne.
 
 
-  #### COUNT, AVG, SUM
+  ### COUNT, AVG, SUM
   > Zbiór funkcji agregujących.
 
   - ``COUNT`` - Zliczanie wszystkich krotek danego atrybutu.
@@ -153,7 +153,7 @@
     ```
 
 
-  #### BETWEEN
+  ### BETWEEN
   > Operator zakresu, pozwala na wybranie wartości ``pomiędzy`` zadeklarowanymi.
 
   Wykorzystwanie operatora zakresu następuje w polu warunku wyszukiwania. Wartości zakresu mogą być reprezentowane przez ``wartości liczbowe``, ``tekstowe`` lub ``wartości daty``.
@@ -164,7 +164,7 @@
   WHERE CategoryID BETWEEN 2 AND 5
   ```
 
-  #### LIKE
+  ### LIKE
   > Operator podobieństwa, stosowany w klauzuli ``WHERE`` i wykorzystywany do wyszukiwania po przez określony schemat w atrybucie.
   
   > <div align="right"><sub>1.16 Listing - Symbole schematu operatora</sub></div>
@@ -195,7 +195,7 @@
   Na listingu 1.18 zaprezentowany został przykład wyszukujący klientów których nazwa miasta zaczyna się na literę ``L`` i jest conajmniej 6 literowa (5 dowolnych i zaczynająca się na L).
 
 
-  #### MIN i MAX
+  ### MIN i MAX
   > Zbiór funkcji wybierających najmniejszą oraz największą wartość z kolumny.
   
   - ``MIN`` - funkcja zwracająca najmniejszą wartość w kolumnie.
@@ -217,7 +217,7 @@
     ```
   
 
-  #### LIMIT
+  ### LIMIT
   > Klauzula ograniczająca ilość wyników do projekcji. Szczególnie użyteczne dla dużych encji z tysiącami krotek, które są wybierane przez użytkowników.
   
   Zastosowanie tej klauzuli jest umiejscowione zawsze na samym końcu zapytania.
@@ -227,6 +227,143 @@
   SELECT * FROM OrderDetails LIMIT 10
   ```
 
+
+
+  ### Podzapytania
+  > Podzapytanie to zapytanie SQL, które umieszczone jest wewnątrz innego zapytania. Podzapytanie zawsze otoczone jest parą nawiasów ().
+
+  > Podzapytanie może występować praktycznie wszędzie wewnątrz zapytania SQL. To gdzie podzapytanie może być użyte uzależnione jest od tego ile wartości zwraca. Jeśli podzapytanie zwraca pojedynczą wartość może być użyte jako część wyrażenia – na przykład w porównaniach, czy zwracanych atrybutach.
+
+  > <div align="right"><sub>1.22 Listing - Przykładowe zwykłe podzapytanie</sub></div>
+  ```sql
+  SELECT ProductName
+  FROM Products
+  WHERE ProductID IN (
+    SELECT ProductID 
+    FROM OrderDetails 
+    GROUP BY ProductID
+    HAVING COUNT(*) > 50
+  )
+  ```
+  Zapytanie wyświetla ``nazwy produktów``, których ``ilość powtórzeń`` w tabeli ``OrderDetails`` jest większa niż 50.
+  
+  > (Produkt o konkretnym ID powtórzył się 50 razy).
+
+  #### Skorelowane podzapytania
+  > Różnica między zwykłym podzapytaniem, a skorelowanym jest taka, że w skorelowanym podzapytaniu jest nawiązanie do zapytania nadrzędnego.
+
+  > <div align="right"><sub>1.23 Listing - Przykładowe skorelowane zapytanie</sub></div>
+  ```sql
+  SELECT ProductID, ProductName
+  FROM Products AS p
+  WHERE ProductID IN (
+    SELECT ProductID
+    FROM OrderDetails AS od
+    WHERE p.ProductID = od.ProductID
+  )
+  ```
+  Podzapytanie nie będzie mogło istnieć bez zapytania nadrzędnego, ponieważ, podzapytanie wykorzystuje alias ``p`` w odniesieniu do tabeli ``Products`` o której istnieniu podzapytanie nie wie. 
+  
+  W ten sposób możemy rozróżnić ``zwykłe podzapytanie`` od ``zapytania skorelowanego`` - zwykłe może zostać wykonane samodzielnie, skorelowane natomiast wykorzystuje zapytanie nadrzędne.
+
+
+  ### Joins
+  > Klauzula dzięki której możliwe jest połączenie kolumn z conajmniej dwóch encji, zastosowanie jest możliwe jedynie dzięki relacyjności encji. Składa się z kilku typów ``INNER``, ``LEFT``, ``RIGHT``, ``CROSS``.
+
+  Połączenia w ``MySQL`` posiadają kilka typów
+  
+  #### INNER JOIN
+  Połączenie polegające na złączeniu wspólnej części kolumn
+
+  > <div align="right"><sub>1.24 Rysunek - Zakres INNER JOIN</sub></div>
+  <div align="center">
+  
+  ![g_inner_join](https://user-images.githubusercontent.com/125214141/225445235-696ad0b5-87ba-46d6-b1b1-9752b88be332.png)
+  
+  </div>
+  
+  ```sql
+  SELECT atrybut
+  FROM nazwa_tabeli
+  INNER JOIN nazwa_drugiej_tabeli
+  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  ```
+
+  #### LEFT JOIN
+  Połączenie polegające na złączeniu lewej oraz wspólnej części kolumn
+
+  > <div align="right"><sub>1.25 Rysunek - Zakres LEFT JOIN</sub></div>  
+  <div align="center">
+  
+  ![g_left_join](https://user-images.githubusercontent.com/125214141/225445310-c3553b75-3c05-4737-8857-56a6f217617c.png)
+
+  </div>
+
+  ```sql
+  SELECT atrybut
+  FROM nazwa_tabeli
+  LEFT JOIN nazwa_drugiej_tabeli
+  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  ```
+
+  #### RIGHT JOIN
+  Połączenie polegające na złączeniu prawej oraz wspólnej części kolumn
+
+  > <div align="right"><sub>1.26 Rysunek - Zakres RIGHT JOIN</sub></div>
+  <div align="center">
+  
+  ![g_right_join](https://user-images.githubusercontent.com/125214141/225445378-1dc8521f-1255-4f26-9ebe-6ee897b1d05a.png)
+
+  </div>
+
+  ```sql
+  SELECT atrybut
+  FROM nazwa_tabeli
+  RIGHT JOIN nazwa_drugiej_tabeli
+  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  ```
+
+  #### FULL OUTER JOIN *
+  Połączenie polegające na złączeniu lewej oraz prawej części kolumn, bez części wspólnej.
+
+  > \* - Nie występuje w bazie danych MySQL domyślnie, wspierane jest natomiast przez inne bazy danych takie jak np. PostgreSQL.
+
+  > <div align="right"><sub>1.27 Rysunek - Zakres FULL OUTER JOIN</sub></div>
+  <div align="center">
+
+  ![g_outer_join-removebg-preview](https://user-images.githubusercontent.com/125214141/225446265-8e0de5cb-e24e-484c-97a7-fa986cb3e23b.png)
+
+  </div>
+
+  ```sql
+  SELECT atrybut
+  FROM nazwa_tabeli
+  FULL OUTER JOIN nazwa_drugiej_tabeli
+  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  WHERE 
+  nazwa_tabeli.atrybut IS NULL
+  OR 
+  nazwa_drugiej_tabeli.atrybut IS NULL
+  ```
+
+  #### CROSS JOIN
+  Połączenie polegające na złączeniu lewej, wspólnej oraz prawej części kolumn. Występuję również pod klauzulą ``FULL JOIN``.
+
+  > <div align="right"><sub>1.28 Rysunek - Zakres CROSS JOIN</sub></div>
+  <div align="center">
+  
+  ![g_full_join](https://user-images.githubusercontent.com/125214141/225446330-1375f940-3783-4bd5-841b-eddfbdaa2874.png)
+  
+  </div>
+
+  ```sql
+  SELECT atrybut
+  FROM nazwa_tabeli
+  CROSS JOIN nazwa_drugiej_tabeli
+  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  ```
+
+  </div>
 
   ### 🌟 Zadania do wykonania
   > Do wykonania tego poddziału wykorzystamy gotową bazę do nauki W3Schools, link poniżej.
@@ -257,22 +394,82 @@
   
   4. Zlicz liczbę zamówień dla każdego klienta w tabeli ``Orders``, wyniki posortuj malejąco względem liczby zamówień dokonanych przez klienta.
 
-  ### Podzapytania
-  > Podzapytanie to zapytanie SQL, które umieszczone jest wewnątrz innego zapytania. Podzapytanie zawsze otoczone jest parą nawiasów ().
+  5. Wybierz z encji ``Products`` oraz ``OrderDetails`` następujące atrybuty - nazwę produktu, cenę produktu, numer zamówienia oraz ilość.
 
-  > Podzapytanie może występować praktycznie wszędzie wewnątrz zapytania SQL. To gdzie podzapytanie może być użyte uzależnione jest od tego ile wartości zwraca. Jeśli podzapytanie zwraca pojedynczą wartość może być użyte jako część wyrażenia – na przykład w porównaniach, czy zwracanych atrybutach.
+  6. Wyświetl całą encję ``Orders`` zamieniając ID przewoźnika na jego konkretną nazwę.
 
+  7. Wyświetl id szczegółów zamówienia, imie pracownika zajmującego się zamówieniem oraz date zamówienia. Wynik wyszukiwania posortuj rosnąco po id szczegółów zamówienia.
 
+     - Zmodyfikuj powyższy podpunkt w następujący sposób:
 
+       - Zlicz liczbę zamówień przypadającą każdemu z pracowników i wyświetl dodatkowo ich datę urodzenia. Wynik posortuj względem liczby zamówień malejąco.
 
   ## Zapytania ``INSERT``
-  > in progress
+  > Polecenie to wykorzystywane jest do wprowadzania danych do encji.
+  
+  Syntaktyka zapytania ma dwa sformułowania
+  
+  > <div align="right"><sub>1.29 Listing - Uproszczona syntaktyka INSERT</sub></div>
+  ```sql
+  INSERT INTO nazwa_tabeli VALUES ('Przykład', 69); 
+  ```
 
+  A także
+
+  > <div align="right"><sub>1.30 Listing - Pełna syntaktyka INSERT</sub></div>
+  ```sql
+  INSERT INTO nazwa_tabeli (atrybut, atrybut, ...) VALUES ('Przykład', 69); 
+  ```
+
+  Pełna syntaktyka zapewnia dowolność wprowadzania wartości według schematu określonego przed słowem kluczowym ``VALUES``, więc jeśli określimy, aby atrybut liczbowy (dla którego wartość wprowadzana w listingu 1.30 to 69) był na początku, to takie wprowadzenie wartości z zmienioną kolejnością jest możliwe. W przypadku uproszczonej syntaktyki ta możliwość ``nie istnieje``.
+
+
+  ### 🌟 Zadania do wykonania
+  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
+
+  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
+
+  1. W nowo utworzonej tabeli zdefiniuj 5 atrybutów różnego typu, a następnie zapytaniem ``INSERT`` wprowadz 10 nowych krotek do tabeli. Pierwsze 5 krotek wykonaj uproszczoną metodą, a kolejne 5 pełną zamieniając kolejność atrybutów w zapisie.
 
   ## Zapytania ``UPDATE``
-  > in progress
+  > Polecenie to wykorzystywane jest do aktualizowania danych do encji.
 
+  Syntaktyka zapytania jest następująca:
+
+  > <div align="right"><sub>1.31 Listing - Syntaktyka zapytania UPDATE</sub></div>
+  ```sql
+  UPDATE nazwa_tabeli
+  SET atrybut = wartość, atrybut_drugi = wartość_druga, ...
+  WHERE [warunek_wyszukiwania]
+  ```
+
+  W przypadku nie określenia warunku wyszukiwania w klauzuli ``WHERE``, wszystkie krotki określonego atrybutu w zapytaniu zostaną zaktualizowane.
+
+
+  ### 🌟 Zadania do wykonania
+  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
+
+  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
+
+  1. W już istniejącej encji z poprzedniego poddziału dokonaj aktualizacji 5 dowolnych krotek.
 
 
   ## Zapytania ``DELETE``
-  > in progress
+  > Polecenie to wykorzystywane jest do usuwania istniejących krotek w encji.
+
+  Syntaktyka zapytania jest następująca:
+
+  > <div align="right"><sub>1.32 Listing - Syntaktyka zapytania UPDATE</sub></div>
+  ```sql
+  DELETE FROM nazwa_tabeli
+  WHERE [warunek_wyszukiwania]
+  ```
+
+  Sytuacja wygląda podobnie jak w przypadku polecenia ``UPDATE``, w przypadku gdy warunek wyszukiwania w klauzuli ``WHERE`` nie zostanie określony, wszystkie krotki zostaną usunięte z tabeli.
+
+  ### 🌟 Zadania do wykonania
+  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
+
+  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
+
+  1. W już istniejącej encji z poprzedniego poddziału dokonaj usunięcia jednej konkretnej krotki o ID 9.
