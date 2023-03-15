@@ -168,12 +168,20 @@
   > Operator podobieństwa, stosowany w klauzuli ``WHERE`` i wykorzystywany do wyszukiwania po przez określony schemat w atrybucie.
   
   > <div align="right"><sub>1.16 Listing - Symbole schematu operatora</sub></div>
+  
+  <div align="center">
+  
   | Symbol schematu operatora | Wyjaśnienie |
   |:---:|:---:|
   | % | Przedstawia zero lub więcej znaków |
   | _ | Przedstawia dokładnie jeden dowolny znak |
 
+  </div>
+  
   > <div align="right"><sub>1.17 Listing - Przykładowe zastosowanie schematów operatora LIKE</sub></div>
+  
+  <div align="center">
+  
   | Schemat operatora | Wyjaśnienie |
   |:---:  |:---:      |
   |"tekst%" | Wyszukanie wszystkich wartości ``zaczynających`` się od "tekst"|
@@ -183,7 +191,9 @@
   |"____era% | Wyszukanie wszystkich wartości, które posiadają "era" na 5 pozycji, słowem pasującym będzie np. "chillera" |
   |"O_az%" | Wyszukanie wszystkich wartości, które zaczynają się na wyraz O_az z jedną dowolną literą na drugim miejscu, wynikami wyszukiwania będą na np. "Okaz", a także i "Oraz".
   |"P_%_%" | Wyszukanie słowa, które zaczyna się na ``P`` i jest conajmniej ``3 literowe``, wynikami wyszukiwania mogą być np. Piwo, Paw"
-
+  
+   </div>
+  
   Zastosowanie ``LIKE`` jest zazwyczaj związane z wyszukiwaniem konkretnego schematu tekstu, np. zaczynającego się na konkretne litery, bądź literę.
 
   > <div align="right"><sub>1.18 Listing - Przykładowa składnia z wykorzystaniem operatora LIKE</sub></div>
