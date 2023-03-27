@@ -290,7 +290,7 @@
 
   - ``nazwa_wyzwalacza`` - nazwa wyzwalacza, która powinna być unikalna w ramach bazy danych.
   - ``BEFORE/AFTER`` - określa, czy wyzwalacz ma być uruchamiany przed (BEFORE) lub po (AFTER) wykonaniu operacji na tabeli.
-    INSERT/UPDATE/DELETE - określa, na której operacji na tabeli wyzwalacz ma reagować.
+  - ``INSERT/UPDATE/DELETE`` - określa, na której operacji na tabeli wyzwalacz ma reagować.
   - ``ON nazwa_tabeli`` - określa, na której tabeli wyzwalacz ma działać.
   - ``FOR EACH ROW`` - oznacza, że wyzwalacz ma działać na każdym wierszu tabeli, który spełnia warunek.
   - ``BEGIN ... END`` - definiuje blok kodu, który ma być wykonany po spełnieniu warunku.
