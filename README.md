@@ -165,6 +165,7 @@
   > <div align="right"><sub>2.13 Tabela - Najważniejsze typy danych</sub></div>
 
   <div align="center">
+    
   | Typ | Opis |
   |:---:|:---:|
   | CHAR(rozmiar) | Ciąg znaków o określonej długości (może zawierać litery, cyfry i specjalne znaki). Parametr ``rozmiar`` definiuje długość kolumny w znakach (od 0 do 255). |
