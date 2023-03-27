@@ -133,6 +133,6 @@ podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycz
   AS
   SELECT * FROM nazwa_tabeli WHERE id = @zmienna;
 
-  EXEC nazwa_procedury 10
+  CALL nazwa_procedury 10
   ```
   
