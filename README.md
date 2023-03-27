@@ -1,485 +1,356 @@
-<div align="center"><h1>📝 Zapytania SQL (DML) 📝</h1></div>
+<div align="center"><h1>🛠️ Zapytania SQL (DDL) 🛠️</h1></div>
+    
+  ``DDL (Data Definition Language)`` jest to język, który służy do definiowania struktury bazy danych, czyli do tworzenia, modyfikowania i usuwania obiektów bazodanowych takich jak tabele, widoki, procedury składowane, indeksy, ograniczenia i inne.
 
-  ## 🧠 Przypomnienie
+  Jego głównym celem jest umożliwienie precyzyjnego definiowania schematu bazy danych, który zapewni spójność danych w całym systemie. DDL umożliwia określenie typu danych, długości i innych właściwości kolumn tabeli, definiowanie relacji między tabelami, określanie kluczy głównych i obcych, a także inne istotne aspekty projektowania bazy danych.
 
-  ### Język manipulacji danych (ang. ``Data Manipulation Language``)
-  > zbiór instrukcji języka zapytań używanych do przetwarzania danych z bazy danych. Są to instrukcje takie jak: ``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE``.
+  W praktyce, DDL jest używane w celu utworzenia struktury bazy danych podczas tworzenia aplikacji lub w przypadku wprowadzania zmian do istniejącej bazy danych. DDL może być również używane do automatyzacji procesu instalacji bazy danych lub jej migracji między różnymi środowiskami.
 
-  > <div align="right"><sub>1.1 Listing - Przykładowa składnia instrukcji SELECT</sub></div>
-  ```sql
-  SELECT atrybut FROM nazwa_tabeli  
-  WHERE [warunki_wyszukiwania] 
-  ORDER BY atrybut [ASC / DESC], 
-  LIMIT ilość_wierszy;
-  ```
+  W przypadku systemów zarządzania bazami danych, takich jak MySQL, DDL jest integralną częścią języka SQL, który jest standardowym językiem używanym w większości relacyjnych systemów zarządzania bazami danych.
 
-  > <div align="right"><sub>1.2 Listing - Przykładowa składnia instrukcji INSERT</sub></div>
-  ```sql
-  INSERT INTO nazwa_tabeli VALUES ('Przykład', 69); 
-  INSERT INTO nazwa_tabeli (atrybut, atrybut...) VALUES ('Przykład', 69); 
-  ```
-
-  > <div align="right"><sub>1.3 Listing - Przykładowa składnia instrukcji UPDATE</sub></div>
-  ```sql
-  UPDATE nazwa_tabeli SET atrybut = 'nowa_wartość' 
-  WHERE [warunek_wyszukania];
-  ```
-
-  > <div align="right"><sub>1.4 Listing - Przykładowa składnia instrukcji DELETE</sub></div>
-  ```sql
-  DELETE FROM nazwa_tabeli WHERE [warunek_wyszukania];
-  ```
-  
 ---
 
-  ## 📽️ Zapytania ``SELECT``
-  > Zapytanie SELECT jest wykorzystywane do wybierania (``projekcji``) danych z bazy. Z pozoru łatwe zagadnienie zapytania może jednak przysporzyć wiele kłopotów jeśli zgłebimy je dokładnie, szczególnie używając ``podzapytań SELECT``, ``złożonych warunków filtrowania WHERE``, czy chociażby funkcji obliczeniowych - grupujących (agregujących), takich jak ``COUNT``,``AVG``,``SUM``,``MIN``,``MAX``.
+  ## 🏗️ Tworzenie struktur - ``CREATE``
+  > Instrukcja ``CREATE`` wykorzystywana jest do tworzenia konkretnych struktur, takich jak: baza danych, table czy widoki, a nawet indeksów.
 
-  ### ORDER BY
-  > Słowo kluczowe (syntaktyczne) wykorzystywane do sortowania wyników rosnąco lub malejąco na podstawie konkretnego atrybutu tabeli.
+  ### ``DATABASE``
+  Dzięki poleceniu ``CREATE DATABASE`` możemy zdefiniować nową bazę danych.
   
-  > <div align="right"><sub>1.4 Listing - Przykładowe sortowanie wyników rosnąco i malejąco</sub></div>
-
+  > <div align="right"><sub>2.1 Listing - Przykładowe utworzenie bazy danych o nazwie ``Przykladowa_baza``</sub></div>
   ```sql
-  SELECT FirstName FROM Employees ORDER BY EmployeeID ASC
-
-  SELECT FirstName FROM Employees ORDER BY EmployeeID DESC
-  ```
-  ``ASC`` - Sortowanie rosnące (z ang. ``ascending``)
-
-  ``DESC`` - Sortowanie malejące (z ang. ``descending``)
-
-  Listing 1.4 przedstawia wybranie atrybutu ``FirstName`` z tabeli ``Employees`` sortując je najpierw rosnąco po atrybucie ``EmployeeID``. Sortowania można dokonać po przez dowolny atrybut, nawet typu ``VARCHAR``.
-
-  ### DISTINCT
-  > Polecenie następujące po ``SELECT`` oznajmiające w zapytaniu, aby zwróciło tylko różniące się od siebie wyniki, innymi słowy redukuje ilość wyników do takich, które się nie powtarzają.
-
-  > <div align="right"><sub>1.5 Listing - Przykładowe zastosowanie DISTINCT</sub></div>
-  ```sql
-  SELECT OrderID FROM OrderDetails
-  ```
-  ![Bez distinct](https://user-images.githubusercontent.com/125214141/221034358-0e52ab3b-7ac1-460f-b226-99b9e0cc8c1e.png)
-
-
-  ```sql
-  SELECT DISTINCT OrderID FROM OrderDetails
-  ```
-  ![Z distinct](https://user-images.githubusercontent.com/125214141/221034552-62c2b5b0-27bc-425e-840d-2a990632c07a.png)
-
-  ### NOT, AND i OR, IN
-  > Operatory służące głównie do klauzuli ``WHERE``, dzięki którym możliwe jest zdefiniowanie więcej niż jednego warunku wyszukiwania.
-  
-  > <div align="right"><sub>1.6 Listing - Zastosowanie operatora AND i OR</sub></div>
-  ```sql
-  SELECT * FROM Customers 
-  WHERE Country = "Germany" AND City = "Berlin" OR City = "Aachen"
+  CREATE DATABASE Przykladowa_baza;
   ```
 
-  W wolnym tłumaczeniu możemy przeczytać warunek logiczny wyszukiwania w ten sposób: Znajdz wszystkich klientów ``GDZIE ich kraj to Germany I miasto to Berlin ORAZ miasto to Aachen``.
+  #### Klauzula ``IF NOT EXISTS``
+  Jeśli nie jesteśmy pewni, czy dana baza danych o konkretnej nazwie już istnieje, warto użyć (a wręcz zawsze powinna być użyta) klauzuli ``IF NOT EXISTS``, przed utworzeniem bazy danych dzięki temu zapytaniu zostanie sprawdzone czy baza danych o konkretnej nazwie już widnieje.
 
-  > <div align="right"><sub>1.7 Listing - Zastosowanie operatora NOT</sub></div>
+  > <div align="right"><sub>2.2 Listing - Przykładowe utworzenie bazy danych o nazwie ``Przykladowa_baza``</sub></div>
   ```sql
-  SELECT * FROM Customers
-  WHERE NOT Country = "UK"
+  CREATE DATABASE IF NOT EXISTS Przykladowa_baza;
   ```
 
-  Natomiast operator ``NOT`` powoduje wykluczenie ze zbioru pasujących elementów jednego konkretnego elementu, bądź całej "listy" elementów, którą można zastosować za pomocą operatora ``IN``.
+  ### ``TABLE``
 
-  Jak możemy zauważyć na listingach 1.6 oraz 1.7, operatory logiczne są całkiem elastyczne jeśli chodzi o zastosowanie, niektóre z tych logik możemy zastosować za pomocą operatora ``IN``. Na przykład listing 1.6 możemy zapisać w ten sposób:
-
-  > <div align="right"><sub>1.8 Listing - Wykorzystanie operatora IN</sub></div>
+  > <div align="right"><sub>2.3 Listing - Przykładowe utworzenie tabeli o nazwie ``Przykladowa_tabela``</sub></div>
   ```sql
-  SELECT * FROM Customers
-  WHERE Country = "Germany" AND City IN ("Berlin", "Aachen")
+  CREATE TABLE Przykladowa_tabela (
+    ID INT,
+    Atrybut1 VARCHAR(40),
+    Atrybut2 DATETIME,
+    Atrybut3 BLOB
+  )
   ```
 
-  Operator ten wykorzystywany jest do zastosowania listy elementów, które można albo uwzględnić w wyszukiwaniu, albo je wykluczyć.
-  
-  > <div align="right"><sub>1.9 Listing - Wykorzystanie operatora NOT wraz z operatorem IN</sub></div>
+  Atrybuty definują nazwę kolumny w bazie danych, po których następuje określenie typu atrybutu.
+
+  Aby utworzyć tabelę taką samą jak już istniejąca, należy wykorzystać słowa kluczowego wykorzystywanego do aliasu w zapytaniach DML - ``AS``.
+
+  > <div align="right"><sub>2.4 Listing - Utworzenie kopii tabeli</sub></div>
   ```sql
-  SELECT * FROM Customers
-  WHERE Country = "Germany" AND City NOT IN ("Berlin", "Aachen")
+  CREATE TABLE Nowa_tabela AS
+  SELECT Atrybut1, Atrybut2
+  FROM Przykladowa_tabela
   ```
   
-  Zapytanie zwróci nam wszystkich klientów z kraju Germany oraz miast wszystkich poza Berlinem oraz Aachen.
+  #### Ograniczenia w tabeli - (``Constraints``)
+  > Ograniczenia służą do ograniczenia typu danych, które można umieścić w tabeli. Zapewnia to dokładność i wiarygodność danych w tabeli. Jeśli wystąpi jakiekolwiek naruszenie między ograniczeniem a działaniem dotyczącym danych, działanie zostanie przerwane.
 
-  ### GROUP BY
-  > Deklaracja oznaczająca grupowanie krotek z tym samym typem wartości w podsumowujący wiersz. Często również słowo kluczowe ``GROUP BY`` wykorzystywane jest do funkcji agregujących takich jak ``COUNT``,``MAX``,``MIN``,``SUM`` czy ``AVG``.
-
-  Przykładowym zastosowaniem GROUP BY jest grupowanie konkretnej kolumny wzgledem drugiej. Na przykład: Zliczenie ilości zamówień danego dnia, by to uczynić musimy użyć funkcji COUNT oraz GROUP BY. Projekcja wyników będzie sensowna tylko wtedy gdy uwzględnimy liczbę zamówień oraz datę.
-  > <div align="right"><sub>1.10 Listing - Wykorzystanie GROUP BY wraz z funkcją agregującą COUNT</sub></div>
-  ```sql
-  SELECT COUNT(OrderID), OrderDate FROM Orders 
-  GROUP BY OrderDate
-  ```
-  Wyniki są pogrupowane względem daty zamówienia, więc funkcja COUNT będzie oznaczać jedynie zsumowanie ilości ID do danego dnia, co po przetłumaczeniu na normalny język będzie znaczyło: Danego dnia ilość zamówień wynosiła [tutaj wartość z COUNT(OrderID)].
-
-  Aby nasza projekcja była bardziej czytelna możemy zastosować ``alias``, deklaracją ``as`` zaraz po atrybucie.
-
-  > <div align="right"><sub>1.11 Listing - Zastosowanie aliasu w zapytaniu agregującym</sub></div>
-  ```sql
-  SELECT 
-  COUNT(OrderID) as Ilosc_zamowien, 
-  OrderDate as Data_zamowienia
-  FROM Orders 
-  GROUP BY Data_zamowienia
-  ```
-
-  Dzięki zastosowaniu ``aliasu`` czyli nazwy zastępczej możemy również wykorzystać ją w dowolnym miejscu zapytania, tak jak ma to miejsce w ``GROUP BY``. Nazwy atrybutów przyjmują wtedy nazwy aliasowe więc i wykorzystanie tych nazw jest jak najbardziej poprawne.
-
-
-  ### COUNT, AVG, SUM
-  > Zbiór funkcji agregujących.
-
-  - ``COUNT`` - Zliczanie wszystkich krotek danego atrybutu.
-
-    > <div align="right"><sub>1.12 Listing - Użycie funkcji COUNT do zliczenia wszystkich krotek atrybutu Price</sub></div>
-    ```sql
-    SELECT COUNT(Price) FROM Products
-    ```
-
-  - ``AVG`` - Zliczenie średniej wartości krotek atrybutu numerycznego.
-
-    > <div align="right"><sub>1.13 Listing - Użycie funkcji AVG do wyliczenia średniej wartości ceny produktu ze wszystkich krotek</sub></div>
-    ```sql
-    SELECT AVG(Price) FROM Products
-    ```
-
-  - ``SUM`` - Zliczenie sumy krotek atrybutu numerycznego.
-    
-    > <div align="right"><sub>1.14 Listing - Użycie funkcji SUM do wyliczenia sumy całej kolumny Price</sub></div>
-    ```sql
-    SELECT SUM(Price) FROM Products      
-    ```
-
-
-  ### BETWEEN
-  > Operator zakresu, pozwala na wybranie wartości ``pomiędzy`` zadeklarowanymi.
-
-  Wykorzystwanie operatora zakresu następuje w polu warunku wyszukiwania. Wartości zakresu mogą być reprezentowane przez ``wartości liczbowe``, ``tekstowe`` lub ``wartości daty``.
-
-  > <div align="right"><sub>1.15 Listing - Wyświetlenie nazwy produktów gdzie id kategorii jest z zakresu [2,5]</sub></div>
-  ```sql
-  SELECT ProductName FROM Products 
-  WHERE CategoryID BETWEEN 2 AND 5
-  ```
-
-  ### LIKE
-  > Operator podobieństwa, stosowany w klauzuli ``WHERE`` i wykorzystywany do wyszukiwania po przez określony schemat w atrybucie.
+  Ograniczenia mogą dotyczyć poziomu kolumny lub poziomu tabeli. Ograniczenia na poziomie kolumny mają zastosowanie do kolumny, a ograniczenia na poziomie tabeli dotyczą całej tabeli.
   
-  > <div align="right"><sub>1.16 Listing - Symbole schematu operatora</sub></div>
-  
+  > <div align="right"><sub>2.5 Tabela - Ograniczenia atrybutów</sub></div>
+
   <div align="center">
-  
-  | Symbol schematu operatora | Wyjaśnienie |
+
+  | Typ ograniczenia | Opis |
   |:---:|:---:|
-  | % | Przedstawia zero lub więcej znaków |
-  | _ | Przedstawia dokładnie jeden dowolny znak |
+  |NOT NULL| Zapewnia, że kolumna nie będzie posiadała wartości NULL|
+  |UNIQUE| Zapewnia, że wartości w kolumnie będą unikalne (różne od siebie)|
+  |PRIMARY KEY| W prawdzie połączenie NOT NULL i UNIQUE - Jednoznaczny identyfikator wiersza w tabeli|
+  | FOREIGN KEY | Klucz obcy |
+  | CHECK | Zapewnia, że wartości w kolumnie spełniają dany warunek|
+  | DEFAULT| Ustalona jest domyślna wartość dla wiersza z pustą komórką|
+  | CREATE INDEX | Służy do indeksowania w celu szybszego wyszukiwania danych |
 
   </div>
-  
-  > <div align="right"><sub>1.17 Listing - Przykładowe zastosowanie schematów operatora LIKE</sub></div>
-  
-  <div align="center">
-  
-  | Schemat operatora | Wyjaśnienie |
-  |:---:  |:---:      |
-  |"tekst%" | Wyszukanie wszystkich wartości ``zaczynających`` się od "tekst"|
-  |"%tekst" | Wyszukanie wszystkich wartości ``kończących`` się na "tekst" |
-  |"tekst%xd" | Wyszukanie wszystkich wartości ``zaczynających`` się na "tekst" i ``kończących`` na "xd" |
-  |"%ess%"| Wyszukanie wszystkich wartości, które posiadają "ess" w ``dowolnym`` miejscu |
-  |"____era% | Wyszukanie wszystkich wartości, które posiadają "era" na 5 pozycji, słowem pasującym będzie np. "chillera" |
-  |"O_az%" | Wyszukanie wszystkich wartości, które zaczynają się na wyraz O_az z jedną dowolną literą na drugim miejscu, wynikami wyszukiwania będą na np. "Okaz", a także i "Oraz".
-  |"P_%_%" | Wyszukanie słowa, które zaczyna się na ``P`` i jest conajmniej ``3 literowe``, wynikami wyszukiwania mogą być np. Piwo, Paw"
-  
-   </div>
-  
-  Zastosowanie ``LIKE`` jest zazwyczaj związane z wyszukiwaniem konkretnego schematu tekstu, np. zaczynającego się na konkretne litery, bądź literę.
 
-  > <div align="right"><sub>1.18 Listing - Przykładowa składnia z wykorzystaniem operatora LIKE</sub></div>
+  > <div align="right"><sub>2.6 Listing - Przykładowe utworzenie tabeli z ograniczeniem NOT NULL</sub></div>
   ```sql
-  SELECT * FROM Customers
-  WHERE City LIKE "L_%_%_%_%_%"
+  CREATE TABLE Czlowieki (
+    CzlowiekiID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Nazwisko varchar(255) NOT NULL,
+    Wiek int
+  ); 
+  ```
+  > <div align="right"><sub>2.7 Listing - Zastosowanie ograniczenia UNIQUE</sub></div>
+  ```sql
+  CREATE TABLE Czlowieki (
+    CzlowiekiID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Nazwisko varchar(255),
+    Wiek int,
+    UNIQUE (CzlowiekiID)
+  );
+  ```
+  
+  Natomiast aby zdefiniować ``UNIQUE`` ograniczenie dla wielu atrybutów w tabeli trzeba określić osobne ograniczenie.
+
+  > <div align="right"><sub>2.8 Listing - Zastosowanie ograniczenia UNIQUE z przydzieloną nazwą</sub></div>
+  ```sql
+  CREATE TABLE Czlowieki (
+    CzlowiekiID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Nazwisko varchar(255),
+    Wiek int,
+    CONSTRAINT Nazwa_ograniczenia UNIQUE (CzlowiekiID, Imie)
+  );
   ```
 
-  Na listingu 1.18 zaprezentowany został przykład wyszukujący klientów których nazwa miasta zaczyna się na literę ``L`` i jest conajmniej 6 literowa (5 dowolnych i zaczynająca się na L).
+  W prosty sposób możemy zastosować składnię aby określić klucz główny, jednakże znacznie łatwiej jest zapisać to ograniczenie zaraz po typie atrybutu.
 
+  > <div align="right"><sub>2.9 Listing - Zastosowanie ograniczenia PRIMARY KEY</sub></div>
+  ```sql
+  CREATE TABLE Czlowieki (
+    CzlowiekiID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Nazwisko varchar(255),
+    Wiek int,
+    PRIMARY KEY (CzlowiekiID)
+  );
+  ```
 
-  ### MIN i MAX
-  > Zbiór funkcji wybierających najmniejszą oraz największą wartość z kolumny.
+  Określenie klucza obcego wymaga zastosowania poniższej składni odwołującej się do tabli, z którą zostanie połączona.
+
+  > <div align="right"><sub>2.10 Listing - Zastosowanie PRIMARY KEY oraz FOREIGN KEY w odniesieniu do tabeli Czlowieki</sub></div>
+  ```sql
+  CREATE TABLE Zwierze (
+    ZwierzeID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Wiek int,
+    CzlowiekiID int,
+
+    PRIMARY KEY (ZwierzeID),
+    FOREIGN KEY (CzlowiekiID) REFERENCES Czlowieki(CzlowiekiID)
+  );
+  ```
+
+  By natomiast zdefiniować alternatywną nazwę dla klucza obcego, wystarczy zapisać pełną forme zapisu.
+
+  > <div align="right"><sub>2.11 Listing - Zastosowanie pełnej syntaktyki FOREIGN KEY w odniesieniu do tabeli Czlowieki</sub></div>
+  ```sql
+  ...
+  CONSTRAINT FK_CzlowiekiZwierze FOREIGN KEY (CzlowiekiID)
+  REFERENCES Czlowieki(CzlowiekiID)
+  ``` 
+
+  Ciekawą opcją jest ograniczenie ``CHECK``, które dosłownie pozwala wprowadzić nam ``instrukcję warunkową``, za pomocą której będzie mozliwe dodanie rekordu do tabeli, lub też nie.
+
+  > <div align="right"><sub>2.12 Listing - Przykład zastosowania ograniczenia CHECK</sub></div>
+  ```sql
+  CREATE TABLE Zwierze (
+    ZwierzeID int NOT NULL,
+    Imie varchar(255) NOT NULL,
+    Wiek int,
+    CzlowiekiID int,
+
+    PRIMARY KEY (ZwierzeID),
+    CONSTRAINT WiekCheck_Zwierze CHECK (Wiek >= 0)
+  );
+  ```
+
+  Cały warunek odbywa się w nawiasach okrągłych, dzięki czemu możemy zastosować ``operatory logiczne`` wykorzystywane w zapytaniach ``DML``.
+
+  #### Typy atrybutów
+
+  > <div align="right"><sub>2.13 Tabela - Najważniejsze typy danych</sub></div>
+
+  <div align="center">
+  | Typ | Opis |
+  |:---:|:---:|
+  | CHAR(rozmiar) | Ciąg znaków o określonej długości (może zawierać litery, cyfry i specjalne znaki). Parametr ``rozmiar`` definiuje długość kolumny w znakach (od 0 do 255). |
+  | VARCHAR(rozmiar) | Ciąg znaków o zmiennej długości. Parametr ``rozmiar`` definiuje długość kolumny w znakach (od 0 do 65535) |
+  | BINARY(rozmiar) | Podobnie jak CHAR(), z tą różnicą, że przechowuje binarnie bity ciągów. Parametr ``rozmiar`` definiuje długość kolumny w bajtów |
+  | TEXT(rozmiar) | Przechowuje ciąg znaków z maksymalną długością 65,535 bajtów |
+  | BLOB(rozmiar) | Binary Large OBjects - przechowuje do 65,535 bajtów danych |
+  | BIT(rozmiar) | Typ bitowy, liczba bitów na wartość jest zdefiniowana w parametrze ``rozmiar``. Może przechowywać od 1 do 64 bitów. |
+  | TINYINT(rozmiar) | Bardzo mała liczba całkowita, od -128 do 127. |
+  | INT(rozmiar)| Średnia liczba całkowita, może przechowywać od -2147483648 do 2147483647, parametr ``rozmiar`` definiuje maksymalną szerokość (czyli 255) |
+  | FLOAT(punkt) | Liczba zmienno-przecinkowa, MySQL za pomocą parametru ``punkt`` definiuje czy liczba jest typu FLOAT(od 0 do 24), czy DOUBLE (od 25 do 53)|
+  | DOUBLE(rozmiar, ilosc_liczb_po_przecinku) | Liczba zmienno-przecinkowa normalnej wielkości, całkowita liczba cyfr określona jest w ``rozmiar``, natomiast liczba cyfr po przecinku w ``ilosc_liczb_po_przecinku`` |
+  | DECIMAL(rozmiar, ilosc_liczb_po_przecinku) | Dokładnie określony punkt przecinkowy, liczba cyfr po przecinku zdefiniowana jest w ``ilosc_liczb_po_przecinku``, maksymalna wartość tego parametru to 30, a dla ``rozmiar`` - 65. |
+  | DATE | Format daty: YYYY-MM-DD, wspiera zakres od ``1000-01-01`` do ``9999-12-31``|
+  | TIME | Format czasu: hh:mm:ss, wspiera zakres od ``-838:59:59`` do ``838:59:59`` |
+  | YEAR | 4 cyfrowy format roku |
+
+  </div>
+
+  ## 🧬 Modyfikowanie struktur - ``ALTER``
+  > Po utworzeniu konkretnej struktury, może zdarzyć się potrzeba modyfikacji jej, czy to będzie tabela czy nawet baza danych. Służy ku temu deklaracja ``ALTER``. Za przykład posłuży wcześniej wspomniania encja ``Czlowieki``.
+
+  ### Dodawanie atrybutów
+
+  > <div align="right"><sub>2.14 Listing - Modyfikacja tabeli, dodanie atrybutu</sub></div>
+  ```sql
+  ALTER TABLE Czlowieki
+  ADD Drugie_imie VARCHAR(69); 
+  ```
+
+  W podobny sposób możemy dodawać ograniczenia (constraints) czy chociażby indeksowanie.
+
+  ### Usuwanie atrybutów
+  Aby usunąć atrybut, należy jedynie podać jego konkretną nazwę, poprzedzone słowem ``COLUMN``, aby MySQL wiedział, że usuwa kolumne, a nie na przykład powiązanie.
   
-  - ``MIN`` - funkcja zwracająca najmniejszą wartość w kolumnie.
+  > <div align="right"><sub>2.15 Listing - Modyfikacja tabeli, usunięcie atrybutu</sub></div>
+  ```sql
+  ALTER TABLE Czlowieki
+  DROP COLUMN Wiek;
+  ```
+
+  ### Modyfikowanie atrybutów
+
+  > <div align="right"><sub>2.16 Listing - Modyfikacja tabeli, zmodyfikowanie atrybutu i jego typu</sub></div>
+  ```sql
+  ALTER TABLE Czlowieki
+  MODIFY COLUMN Drugie_imie VARCHAR(100); 
+  ```
+
+  Modyfikować również można w taki sposób aby dodać ograniczenia.
+
+  > <div align="right"><sub>2.17 Listing - Modyfikacja tabeli, zdefiniowanie ograniczenia</sub></div>
+  ```sql
+  ALTER TABLE Czlowieki
+  MODIFY Wiek int NOT NULL;
+  ```
+
+  ## 📇 Indeksy
+  Indeksy zostały zostawione na koniec ze względu na brak ich klarowności.
+
+  W wszelakich źródłach możemy wyczytać, że indeksy są po to by:
+
+  > Indeksy są wykorzystywane do zwracania danych z bazy danych szybciej niż zwykle. Użytkownicy nie widzą indeksów, natomiast istnieją one po to by przyśpieszyć wyszukiwanie / zapytania. ~ ``W3Schools.com, dostęp do zasobu z dnia 27.03.2023``
+
+  > Indeksy można tworzyć na jednej lub kilku kolumnach, które zamierzamy sprawdzić w zapytaniu. Indeksy to struktury danych na dysku umożliwiające szybkie wyszukiwanie danych w bazie danych na podstawie wartości kluczy wyszukiwania. ~ ``Krysinski.eu, dostęp z dnia 21.02.2013``
+
+  > Indexing is the way to get an unordered table into an order that will maximize the query’s efficiency while searching. When a table is unindexed, the order of the rows will likely not be discernible by the query as optimized in any way, and your query will therefore have to search through the rows linearly. In other words, the queries will have to search through every row to find the rows matching the conditions. As you can imagine, this can take a long time. Looking through every single row is not very efficient. ~ ``Chartio.com, dostęp z dnia 27.03.2023``
+
+  Jaśniejsze wyjaśnienie tego zagadnienia
+
+  > W gruncie rzeczy indeks w tabeli działa dokładnie jak indeks w książce:
+
+  > Powiedzmy, że jest książka o bazach danych i chcemy znaleźć jakąś informacje o na przykład "magazynowaniu". Bez indeksu trzeba przejść po każdej ze stron jedna po drugiej, do momentu aż znajdziemy temat który nas interesuje (to był by skan całej tabeli). Z drugiej strony, indeks ma liste słów kluczowych, więc jeśli chcielibyśmy odnieść się do informacji o "magazynowaniu", które wskazywałby indeks na stronach 100-213,700 i 862-giej to przerzucilibyśmy szybko strony na te konkretne bez przekładania jednej po drugiej (i stąd bierze się cały zysk szybkości indeksowania).
+
+  > Oczywiście, od tego jak indeks może być przydany, zależy wiele rzeczy - kilka przykładów:
+
+  > Jeśli mielibyśmy książke o bazach danych i zindeksowane słowo "baza danych" wystąpiło by na stronach 1-69, 71-333 i od 335 do 700, to w tym przypadku indeks nie jest zbyt pomocny, ze względu na to, że przeszukanie stron jedna po drugiej okazałoby się szybsze, co jest określane mianem ``słabej selektywności``.
+  
+  > Dla 10 stronnicowej książki, indeksy są bez sensu, ponieważ jest to zbyt mała książka, by indeksowanie pozostawiło znaczący "ślad" w szybkości wyszukiwania wyników. ~ ``Stackoverflow.com, zasób z dnia 27.03.2023, tłum. Damian K.``
     
-    > <div align="right"><sub>1.19 Listing - Przykładowe użycie funkcji MIN</sub></div>
-    ```sql
-    SELECT MIN(Quantity) FROM OrderDetails      
-    ```
-  
-  - ``MAX`` - funkcja zwracająca największą wartość w kolumnie.
-    
-    > <div align="right"><sub>1.20 Listing - Przykładowe użycie funkcji MAX</sub></div>
-    ```sql
-    SELECT 
-    MAX(Quantity) as Najwieksza_ilosc,
-    ProductID 
-    FROM OrderDetails
-    GROUP BY ProductID ORDER BY Najwieksza_ilosc DESC LIMIT 1     
-    ```
-  
 
-  ### LIMIT
-  > Klauzula ograniczająca ilość wyników do projekcji. Szczególnie użyteczne dla dużych encji z tysiącami krotek, które są wybierane przez użytkowników.
-  
-  Zastosowanie tej klauzuli jest umiejscowione zawsze na samym końcu zapytania.
+  ### Tworzenie indeksów
 
-  > <div align="right"><sub>1.21 Listing - Wykorzystanie klauzuli LIMIT w celu ograniczenia ilości wyników</sub></div>
+  Składnia indeksu pozwalająca na duplikaty wartości
+
+  > <div align="right"><sub>2.18 Listing - Modyfikacja tabeli, zdefiniowanie ograniczenia</sub></div>
   ```sql
-  SELECT * FROM OrderDetails LIMIT 10
+  CREATE INDEX nazwa_indeksu
+  ON nazwa_tabeli (atrybut1, atrybut2, ...);
   ```
 
+  Składnia indeksu nie pozwalająca na duplikaty wartości, tzw. "unikalny indeks".
 
-
-  ### Podzapytania
-  > Podzapytanie to zapytanie SQL, które umieszczone jest wewnątrz innego zapytania. Podzapytanie zawsze otoczone jest parą nawiasów ().
-
-  > Podzapytanie może występować praktycznie wszędzie wewnątrz zapytania SQL. To gdzie podzapytanie może być użyte uzależnione jest od tego ile wartości zwraca. Jeśli podzapytanie zwraca pojedynczą wartość może być użyte jako część wyrażenia – na przykład w porównaniach, czy zwracanych atrybutach.
-
-  > <div align="right"><sub>1.22 Listing - Przykładowe zwykłe podzapytanie</sub></div>
+  > <div align="right"><sub>2.19 Listing - Modyfikacja tabeli, zdefiniowanie ograniczenia</sub></div>
   ```sql
-  SELECT ProductName
-  FROM Products
-  WHERE ProductID IN (
-    SELECT ProductID 
-    FROM OrderDetails 
-    GROUP BY ProductID
-    HAVING COUNT(*) > 50
-  )
-  ```
-  Zapytanie wyświetla ``nazwy produktów``, których ``ilość powtórzeń`` w tabeli ``OrderDetails`` jest większa niż 50.
-  
-  > (Produkt o konkretnym ID powtórzył się 50 razy).
-
-  #### Skorelowane podzapytania
-  > Różnica między zwykłym podzapytaniem, a skorelowanym jest taka, że w skorelowanym podzapytaniu jest nawiązanie do zapytania nadrzędnego.
-
-  > <div align="right"><sub>1.23 Listing - Przykładowe skorelowane zapytanie</sub></div>
-  ```sql
-  SELECT ProductID, ProductName
-  FROM Products AS p
-  WHERE ProductID IN (
-    SELECT ProductID
-    FROM OrderDetails AS od
-    WHERE p.ProductID = od.ProductID
-  )
-  ```
-  Podzapytanie nie będzie mogło istnieć bez zapytania nadrzędnego, ponieważ, podzapytanie wykorzystuje alias ``p`` w odniesieniu do tabeli ``Products`` o której istnieniu podzapytanie nie wie. 
-  
-  W ten sposób możemy rozróżnić ``zwykłe podzapytanie`` od ``zapytania skorelowanego`` - zwykłe może zostać wykonane samodzielnie, skorelowane natomiast wykorzystuje zapytanie nadrzędne.
-
-
-  ### Joins
-  > Klauzula dzięki której możliwe jest połączenie kolumn z conajmniej dwóch encji, zastosowanie jest możliwe jedynie dzięki relacyjności encji. Składa się z kilku typów ``INNER``, ``LEFT``, ``RIGHT``, ``CROSS``.
-
-  Połączenia w ``MySQL`` posiadają kilka typów
-  
-  #### INNER JOIN
-  Połączenie polegające na złączeniu wspólnej części kolumn
-
-  > <div align="right"><sub>1.24 Rysunek - Zakres INNER JOIN</sub></div>
-  <div align="center">
-  
-  ![g_inner_join](https://user-images.githubusercontent.com/125214141/225445235-696ad0b5-87ba-46d6-b1b1-9752b88be332.png)
-  
-  </div>
-  
-  ```sql
-  SELECT atrybut
-  FROM nazwa_tabeli
-  INNER JOIN nazwa_drugiej_tabeli
-  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  CREATE UNIQUE INDEX nazwa_indeksu
+  ON nazwa_tabeli (atrybut1, atrybut2, ...);
   ```
 
-  #### LEFT JOIN
-  Połączenie polegające na złączeniu lewej oraz wspólnej części kolumn
+  Przykładowe zastosowanie indeksu na opisywanej wcześniej tabeli ``Czlowieki``. Aby zastosować indeks do kilku atrybutów należy oddzielić je przecinkiem i stosownie nazwać indeks.
 
-  > <div align="right"><sub>1.25 Rysunek - Zakres LEFT JOIN</sub></div>  
-  <div align="center">
-  
-  ![g_left_join](https://user-images.githubusercontent.com/125214141/225445310-c3553b75-3c05-4737-8857-56a6f217617c.png)
-
-  </div>
-
+  > <div align="right"><sub>2.20 Listing - Modyfikacja tabeli, zdefiniowanie ograniczenia</sub></div>
   ```sql
-  SELECT atrybut
-  FROM nazwa_tabeli
-  LEFT JOIN nazwa_drugiej_tabeli
-  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  CREATE INDEX idx_nazwisko
+  ON Czlowieki (Nazwisko);
   ```
 
-  #### RIGHT JOIN
-  Połączenie polegające na złączeniu prawej oraz wspólnej części kolumn
+  Usunięcie indeksu z tabeli odbywa się za pomocą modyfikacji tabeli
 
-  > <div align="right"><sub>1.26 Rysunek - Zakres RIGHT JOIN</sub></div>
-  <div align="center">
-  
-  ![g_right_join](https://user-images.githubusercontent.com/125214141/225445378-1dc8521f-1255-4f26-9ebe-6ee897b1d05a.png)
-
-  </div>
-
+  > <div align="right"><sub>2.21 Listing - Modyfikacja tabeli, zdefiniowanie ograniczenia</sub></div>
   ```sql
-  SELECT atrybut
-  FROM nazwa_tabeli
-  RIGHT JOIN nazwa_drugiej_tabeli
-  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  ALTER TABLE Czlowieki
+  DROP INDEX idx_nazwisko;
   ```
 
-  #### FULL OUTER JOIN *
-  Połączenie polegające na złączeniu lewej oraz prawej części kolumn, bez części wspólnej.
+  ###### ❗ Należy pamietać, że aktualizacja encji z indeksami zajmie znacznie więcej czasu niż encja bez. Powodem tego będą indeksy, które również potrzebują dodatkowego czasu na aktualizację. Dobrą praktyką zatem jest tworzenie indeksów na kolumnach, które są często wyszukiwane.
+  
+  ### 🦖 Wyzwalacze
+  Wyzwalacz (trigger) to obiekt bazy danych, który reaguje na zmiany w tabeli (np. wstawienie, aktualizacja lub usunięcie rekordu) i wykonuje określone akcje w odpowiedzi na te zmiany.
 
-  > \* - Nie występuje w bazie danych MySQL domyślnie, wspierane jest natomiast przez inne bazy danych takie jak np. PostgreSQL.
+  Aby utworzyć wyzwalacz w MySQL, należy użyć polecenia CREATE TRIGGER, które przyjmuje następujące argumenty:
 
-  > <div align="right"><sub>1.27 Rysunek - Zakres FULL OUTER JOIN</sub></div>
-  <div align="center">
+  - ``nazwa_wyzwalacza`` - nazwa wyzwalacza, która powinna być unikalna w ramach bazy danych.
+  - ``BEFORE/AFTER`` - określa, czy wyzwalacz ma być uruchamiany przed (BEFORE) lub po (AFTER) wykonaniu operacji na tabeli.
+    INSERT/UPDATE/DELETE - określa, na której operacji na tabeli wyzwalacz ma reagować.
+  - ``ON nazwa_tabeli`` - określa, na której tabeli wyzwalacz ma działać.
+  - ``FOR EACH ROW`` - oznacza, że wyzwalacz ma działać na każdym wierszu tabeli, który spełnia warunek.
+  - ``BEGIN ... END`` - definiuje blok kodu, który ma być wykonany po spełnieniu warunku.
 
-  ![g_outer_join-removebg-preview](https://user-images.githubusercontent.com/125214141/225446265-8e0de5cb-e24e-484c-97a7-fa986cb3e23b.png)
-
-  </div>
-
+  Na przykład, poniższy kod tworzy wyzwalacz, który zwiększa wartość licznika po każdym wstawieniu wiersza do tabeli ``Customers``
+  
+  > <div align="right"><sub>2.22 Listing - Przykład wykorzystania wyzwalacza</sub></div>
   ```sql
-  SELECT atrybut
-  FROM nazwa_tabeli
-  FULL OUTER JOIN nazwa_drugiej_tabeli
-  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
-  WHERE 
-  nazwa_tabeli.atrybut IS NULL
-  OR 
-  nazwa_drugiej_tabeli.atrybut IS NULL
+  CREATE TRIGGER zliczacz_licznika
+  AFTER INSERT ON Customers
+  FOR EACH ROW
+  BEGIN
+    UPDATE licznik SET wartosc = wartosc + 1 WHERE name = 'Customers';
+  END;
   ```
 
-  #### CROSS JOIN
-  Połączenie polegające na złączeniu lewej, wspólnej oraz prawej części kolumn. Występuję również pod klauzulą ``FULL JOIN``.
+  Przykład wyzwalacza dla aktualizacji sumy zamówienia
 
-  > <div align="right"><sub>1.28 Rysunek - Zakres CROSS JOIN</sub></div>
-  <div align="center">
+  Załóżmy, że w bazie danych istnieje tabela ``orders``, w której przechowywane są informacje o zamówieniach. W tabeli tej znajdują się kolumny ``order_id``, ``customer_id`` oraz ``total_amount``. W celu automatycznego aktualizowania wartości kolumny ``total_amount`` po dodaniu nowego wiersza do tabeli ``order_items`` (która przechowuje szczegóły dotyczące poszczególnych pozycji w zamówieniu), można użyć wyzwalacza o następującej treści:
   
-  ![g_full_join](https://user-images.githubusercontent.com/125214141/225446330-1375f940-3783-4bd5-841b-eddfbdaa2874.png)
-  
-  </div>
-
+  > <div align="right"><sub>2.23 Listing - Kolejny przykład użycia wyzwalacza</sub></div>
   ```sql
-  SELECT atrybut
-  FROM nazwa_tabeli
-  CROSS JOIN nazwa_drugiej_tabeli
-  ON nazwa_tabeli.atrybut = nazwa_drugiej_tabeli.atrybut
+  CREATE TRIGGER update_order_total 
+  AFTER INSERT ON order_items
+  FOR EACH ROW
+  BEGIN
+    UPDATE orders SET total_amount = total_amount + NEW.price * NEW.quantity
+    WHERE order_id = NEW.order_id;
+  END;
   ```
 
-  </div>
+  Wyzwalacz ten jest uruchamiany po każdym wstawieniu nowego wiersza do tabeli ``order_items``. Dla każdego nowego wiersza wyzwalacz pobiera wartość kolumn ``price`` i ``quantity`` z tego wiersza i używa ich do aktualizacji wartości kolumny ``total_amount`` w tabeli ``orders``. Wyzwalacz jest ustawiony tak, aby działał na każdym wierszu (klauzula ``FOR EACH ROW``) i korzysta z identyfikatora zamówienia, aby zaktualizować tylko odpowiedni wiersz w tabeli ``orders``.
+
+
+  ### ⚙️ Procedura
+  Procedura (``stored procedure``) to zbiór instrukcji SQL, który może być przechowywany w bazie danych i wywoływany wielokrotnie. Procedury są bardzo przydatne w aplikacjach, ponieważ pozwalają na zdefiniowanie złożonych operacji i odseparowanie ich od logiki aplikacji. W MySQL tworzenie procedur jest stosunkowo proste.
+
+  Oto przykład tworzenia procedury, która dodaje nowego użytkownika do tabeli ``users``:
+
+  > <div align="right"><sub>2.24 Listing - Przykładowa procedura</sub></div>
+  ```sql
+  CREATE PROCEDURE add_user(IN username VARCHAR(50), IN password VARCHAR(50), IN email VARCHAR(50))
+  BEGIN
+    INSERT INTO users (username, password, email) VALUES (username, password, email);
+  END;
+  ```
+  W powyższym przykładzie, definiujemy nową procedurę ``add_user``, która przyjmuje trzy argumenty: ``username``, ``password`` i ``email``. Wewnątrz bloku kodu procedury używamy instrukcji ``INSERT``, aby dodać nowy wiersz do tabeli ``users``, korzystając z wartości argumentów jako danych.
+
+  Słowo kluczowe ``IN`` w parametrze procedury oznacza, że parametr jest ``wejściowy`` - czyli, że wartość dla tego parametru będzie przekazywana do procedury z zewnątrz. Innymi słowy, jeśli definiujemy parametr ``IN`` w procedurze, musimy przekazać wartość dla tego parametru przy wywoływaniu procedury.
+
+  Aby wywołać procedurę, należy użyć instrukcji ``CALL``
+  
+  > <div align="right"><sub>2.25 Listing - Wywołanie procedury</sub></div>
+  ```sql
+  CALL add_user('johnpaul', 'password123', 'john2@vatican.com');
+  ```
+
+  W tym przykładzie, wartości argumentów ``username``, ``password`` i ``email`` są przekazywane do procedury, która następnie dodaje nowego użytkownika do tabeli ``users``.
+
+  ###### ❗ Ważne jest, aby pamiętać, że procedury muszą być tworzone w kontekście konkretnej bazy danych i mogą być wywoływane tylko w tej samej bazie danych, w której zostały utworzone.
 
   ### 🌟 Zadania do wykonania
-  > Do wykonania tego poddziału wykorzystamy gotową bazę do nauki W3Schools, link poniżej.
-
-  [ 🔗 Przenieś mnie do krainy MySQL!](https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_all)
-  
-  1. Wybierz wszystkie krotki z tabeli ``Customers``, którzy są z miasta ``Walla``.
-        
-     - Zmodyfikuj powyższy podpunkt w następujący sposób: 
-
-       - Wybierz ``imiona klientów`` oraz ich ``adresy``.
-       - Zamień wyszukiwanie przez miasto, na wyszukiwanie przez kraj i wyszukaj klientów zamieszkujących ``Venezuele``.
-       - Posortuj to wyszukiwanie malejąco.
-       - Zlicz wszystkich klientów zamieszkujących ``Venezuele`` za pomocą funkcji ``COUNT``.
-
-  2. Wybierz wszystkie ``ID zamówień`` w tabeli ``OrderDetails``, których ilość przekracza ``21``.
-     
-     - Zmodyfikuj powyższy podpunkt w następujący sposób:
-
-       - Dodaj górne ograniczenie ilości w postaci nie przekraczania liczby ``37``.
-       - Wybierz tylko ``nie powtarzające`` się zamówienia.
-       
-  3. Wyszukaj nazwę produktu, jednostkę oraz cene w tabeli ``Products``, których cena przekracza średnią cene wszystkich produktów. (W przykładzie występuje podzapytanie).
-     
-     - Zmodyfikuj powyższy podpunkt w następujący sposób:
-
-       - Dodatkowo muszą być to produkty, których jednostka to ``bottles`` (butelki) lub ``bags`` (worki).
-  
-  4. Zlicz liczbę zamówień dla każdego klienta w tabeli ``Orders``, wyniki posortuj malejąco względem liczby zamówień dokonanych przez klienta.
-
-  5. Wybierz z encji ``Products`` oraz ``OrderDetails`` następujące atrybuty - nazwę produktu, cenę produktu, numer zamówienia oraz ilość.
-
-  6. Wyświetl całą encję ``Orders`` zamieniając ID przewoźnika na jego konkretną nazwę.
-
-  7. Wyświetl id szczegółów zamówienia, imie pracownika zajmującego się zamówieniem oraz date zamówienia. Wynik wyszukiwania posortuj rosnąco po id szczegółów zamówienia.
-
-     - Zmodyfikuj powyższy podpunkt w następujący sposób:
-
-       - Zlicz liczbę zamówień przypadającą każdemu z pracowników i wyświetl dodatkowo ich datę urodzenia. Wynik posortuj względem liczby zamówień malejąco.
-
-  ## Zapytania ``INSERT``
-  > Polecenie to wykorzystywane jest do wprowadzania danych do encji.
-  
-  Syntaktyka zapytania ma dwa sformułowania
-  
-  > <div align="right"><sub>1.29 Listing - Uproszczona syntaktyka INSERT</sub></div>
-  ```sql
-  INSERT INTO nazwa_tabeli VALUES ('Przykład', 69); 
-  ```
-
-  A także
-
-  > <div align="right"><sub>1.30 Listing - Pełna syntaktyka INSERT</sub></div>
-  ```sql
-  INSERT INTO nazwa_tabeli (atrybut, atrybut, ...) VALUES ('Przykład', 69); 
-  ```
-
-  Pełna syntaktyka zapewnia dowolność wprowadzania wartości według schematu określonego przed słowem kluczowym ``VALUES``, więc jeśli określimy, aby atrybut liczbowy (dla którego wartość wprowadzana w listingu 1.30 to 69) był na początku, to takie wprowadzenie wartości z zmienioną kolejnością jest możliwe. W przypadku uproszczonej syntaktyki ta możliwość ``nie istnieje``.
-
-
-  ### 🌟 Zadania do wykonania
-  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
-
-  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
-
-  1. W nowo utworzonej tabeli zdefiniuj 5 atrybutów różnego typu, a następnie zapytaniem ``INSERT`` wprowadz 10 nowych krotek do tabeli. Pierwsze 5 krotek wykonaj uproszczoną metodą, a kolejne 5 pełną zamieniając kolejność atrybutów w zapisie.
-
-  ## Zapytania ``UPDATE``
-  > Polecenie to wykorzystywane jest do aktualizowania danych do encji.
-
-  Syntaktyka zapytania jest następująca:
-
-  > <div align="right"><sub>1.31 Listing - Syntaktyka zapytania UPDATE</sub></div>
-  ```sql
-  UPDATE nazwa_tabeli
-  SET atrybut = wartość, atrybut_drugi = wartość_druga, ...
-  WHERE [warunek_wyszukiwania]
-  ```
-
-  W przypadku nie określenia warunku wyszukiwania w klauzuli ``WHERE``, wszystkie krotki określonego atrybutu w zapytaniu zostaną zaktualizowane.
-
-
-  ### 🌟 Zadania do wykonania
-  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
-
-  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
-
-  1. W już istniejącej encji z poprzedniego poddziału dokonaj aktualizacji 5 dowolnych krotek.
-
-
-  ## Zapytania ``DELETE``
-  > Polecenie to wykorzystywane jest do usuwania istniejących krotek w encji.
-
-  Syntaktyka zapytania jest następująca:
-
-  > <div align="right"><sub>1.32 Listing - Syntaktyka zapytania UPDATE</sub></div>
-  ```sql
-  DELETE FROM nazwa_tabeli
-  WHERE [warunek_wyszukiwania]
-  ```
-
-  Sytuacja wygląda podobnie jak w przypadku polecenia ``UPDATE``, w przypadku gdy warunek wyszukiwania w klauzuli ``WHERE`` nie zostanie określony, wszystkie krotki zostaną usunięte z tabeli.
-
-  ### 🌟 Zadania do wykonania
-  > Do wykonania tego poddziału wykorzystamy przykładową bazę danych w phpMyAdmin.
-
-  [ 🔗 Przenieś mnie do krainy phpMyAdmin!](localhost/phpmyadmin/)
-
-  1. W już istniejącej encji z poprzedniego poddziału dokonaj usunięcia jednej konkretnej krotki o ID 9.
+  > zrobie, obiecuje
+  ---
