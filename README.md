@@ -402,12 +402,14 @@
 
        - Dodatkowo muszą być to produkty, których jednostka to ``bottles`` (butelki) lub ``bags`` (worki).
   
+  4. Wypisz wszystkie dane klienta, który pochodzi z najczęściej występującego kraju w tabeli ``Customers``.
+  
   4. Zlicz liczbę zamówień dla każdego klienta w tabeli ``Orders``, wyniki posortuj malejąco względem liczby zamówień dokonanych przez klienta.
 
   5. Wybierz z encji ``Products`` oraz ``OrderDetails`` następujące atrybuty - nazwę produktu, cenę produktu, numer zamówienia oraz ilość.
 
   6. Wyświetl całą encję ``Orders`` zamieniając ID przewoźnika na jego konkretną nazwę.
-
+  
   7. Wyświetl id szczegółów zamówienia, imie pracownika zajmującego się zamówieniem oraz date zamówienia. Wynik wyszukiwania posortuj rosnąco po id szczegółów zamówienia.
 
      - Zmodyfikuj powyższy podpunkt w następujący sposób:
