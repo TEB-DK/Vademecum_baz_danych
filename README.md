@@ -165,9 +165,9 @@
   > <div align="right"><sub>2.13 Tabela - Najważniejsze typy danych</sub></div>
 
   <div align="center">
-    
+
   | Typ | Opis |
-  |:---:|:---:|
+  |:---:|:---: |
   | CHAR(rozmiar) | Ciąg znaków o określonej długości (może zawierać litery, cyfry i specjalne znaki). Parametr ``rozmiar`` definiuje długość kolumny w znakach (od 0 do 255). |
   | VARCHAR(rozmiar) | Ciąg znaków o zmiennej długości. Parametr ``rozmiar`` definiuje długość kolumny w znakach (od 0 do 65535) |
   | BINARY(rozmiar) | Podobnie jak CHAR(), z tą różnicą, że przechowuje binarnie bity ciągów. Parametr ``rozmiar`` definiuje długość kolumny w bajtów |
@@ -290,7 +290,7 @@
 
   - ``nazwa_wyzwalacza`` - nazwa wyzwalacza, która powinna być unikalna w ramach bazy danych.
   - ``BEFORE/AFTER`` - określa, czy wyzwalacz ma być uruchamiany przed (BEFORE) lub po (AFTER) wykonaniu operacji na tabeli.
-  - ``INSERT/UPDATE/DELETE`` - określa, na której operacji na tabeli wyzwalacz ma reagować.
+    INSERT/UPDATE/DELETE - określa, na której operacji na tabeli wyzwalacz ma reagować.
   - ``ON nazwa_tabeli`` - określa, na której tabeli wyzwalacz ma działać.
   - ``FOR EACH ROW`` - oznacza, że wyzwalacz ma działać na każdym wierszu tabeli, który spełnia warunek.
   - ``BEGIN ... END`` - definiuje blok kodu, który ma być wykonany po spełnieniu warunku.
@@ -353,5 +353,166 @@
   ###### ❗ Ważne jest, aby pamiętać, że procedury muszą być tworzone w kontekście konkretnej bazy danych i mogą być wywoływane tylko w tej samej bazie danych, w której zostały utworzone.
 
   ### 🌟 Zadania do wykonania
-  > zrobie, obiecuje
+
+  <details>
+  <summary> 🔧 Zadania 1-10 </summary>
+
+  1. Utwórz tabelę o nazwie ``users`` z kolumnami ``id`` (typ INT, klucz główny), ``username`` (typ VARCHAR) i ``email`` (typ VARCHAR).
+
+      ```sql
+      CREATE TABLE users (
+        id ___ _______ ___,
+        username _______(255),
+        email _______(255)
+      );
+      ```
+
+  1. Zmień nazwę kolumny ``username`` na ``user_name`` w tabeli ``users``.
+  
+  1. Dodaj nową kolumnę o nazwie ``age`` (typ INT) do tabeli ``users``.
+
+  1. Utwórz nowy indeks o nazwie ``idx_email`` na kolumnie ``email`` w tabeli ``users``.
+
+  1. Dodaj ograniczenie ``UNIQUE`` na kolumnie ``email`` w tabeli ``users``.
+
+  1. Zmodyfikuj typ danych kolumny ``age`` z ``INT`` na ``BIGINT`` w tabeli ``users``.
+
+  1. Dodaj klucz obcy o nazwie ``fk_user_id`` z kolumny ``id`` tabeli ``users`` do kolumny ``user_id`` tabeli ``posts``.
+
+  1. Usuń indeks o nazwie ``idx_email`` z tabeli ``users``.
+
+  1. Zmień nazwę tabeli ``posts`` na ``articles``.
+  
+  1. Usuń tabelę ``users``.
+
+  </details>
+
+  <details>
+  <summary> 📷 Wyzwalacze i procedury 📜</summary>
+
+  <details>
+  <summary>Baza danych do wykonania zadania</summary>
+
+  ```sql    
+  CREATE DATABASE IF NOT EXISTS baza_do_zadan;
+  USE baza_do_zadan;
+
+  CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    status ENUM('placed', 'shipped', 'delivered', 'cancelled') DEFAULT 'placed' NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    rating INT NOT NULL,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    parent_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS product_categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    category_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    filename VARCHAR(255) NOT NULL,
+    filepath VARCHAR(255) NOT NULL,
+    product_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+  );
+  ```
+
+  </details>
+
+  1. Aktualizuj stan magazynowy po dodaniu nowego zamówienia
+  - 📜 Procedura:
+    - Utwórz procedurę o nazwie ``update_stock`` z parametrami ``product_id`` i ``quantity``.
+    
+    - W ciele procedury, zaktualizuj stan magazynowy produktu o danym ``product_id`` poprzez odjęcie quantity od aktualnej wartości stanu magazynowego.
+    
+    - Zapisz procedurę.
+
+  - 📷 Wyzwalacz:
+    - Utwórz wyzwalacz o nazwie ``new_order_trg`` na tabeli ``orders``.
+  
+    - Ustaw wyzwalacz na reakcję na wstawienie nowego wiersza do tabeli ``orders``.
+    
+    - W akcji wyzwalacza, wywołaj procedurę ``update_stock`` z odpowiednimi wartościami parametrów ``product_id`` i ``quantity``.
+
+  2. Usuń zamówienia starsze niż 30 dni
+  - 📜 Procedura:
+
+    - Utwórz procedurę o nazwie ``delete_old_orders``.
+
+    - W ciele procedury, użyj polecenia ``DELETE`` w celu usunięcia zamówień, które zostały złożone więcej niż ``30 dni temu``.
+    
+    - Zapisz procedurę.
+
+  - 📷 Wyzwalacz:
+
+    - Utwórz wyzwalacz o nazwie ``delete_old_orders_trg`` na tabeli orders.
+    
+    - Ustaw wyzwalacz na reakcję na wstawienie, aktualizację lub usunięcie wiersza z tabeli ``orders``.
+    
+    - W akcji wyzwalacza, wywołaj procedurę ``delete_old_orders``.
+  </details>
+
   ---
