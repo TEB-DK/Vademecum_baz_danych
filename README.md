@@ -1,140 +1,128 @@
-![obraz-removebg-preview(17)](https://user-images.githubusercontent.com/125214141/219492076-34c6b650-b361-473d-8b09-8826d0141654.png)
+<div align="center">
 
-<div align="center"><h1>📘 Vademecum baz danych 📘</h1></div>
+# 🎒 Projekt Szkoła 🏫
 
-podstawowe informacje z lokalnych baz danych o charakterze informacyjno-praktycznym. Znajomość tych zagadnień jest **_obowiązkowa_**. 
-  ## 📚 Podstawowe pojęcia
-  
-  ### Baza danych
-  > zbiór powiązanych ze sobą informacji, zorganizowany w określoną strukturę.
-  
-  ### Rodzaje baz danych
-  > - ``Nierelacyjne`` – baza danych, która nie korzysta ze schematu tabelarycznego wierszy i kolumn znalezionych w większości tradycyjnych systemów baz danych. Zamiast tego nierelacyjne bazy danych używają modelu magazynu zoptymalizowanego pod kątem określonych wymagań dotyczących typu przechowywanych danych. Na przykład dane mogą być przechowywane jako proste pary klucz/wartość, dokumenty ``JSON`` lub jako graf składający się z krawędzi i wierzchołków.
-  > - ``Relacyjne`` – dane gromadzone, przetwarzane i przechowywane za pomocą komputera. Dane umieszczone w tabelach (przynajmniej dwóch) pozostających w ścisłym związku z sobą.
-  
-  ### System zarządzania bazami danych
-  > to program komputerowy, który służy do przechowywania i modyfikowania danych, np. Acces (Microsoft Office), Base (OpenOffice).
-  
-  ### Encja
-  > to uporządkowany zbiór danych, przechowywanych w ujednolicony sposób. Dane w tabeli mogą być poddawane różnym operacjom: przeglądane, wyszukiwane, zamieniane, zaznaczane, kopiowane, usuwane.
-  
-  ### Krotka
-  > wiersz w tabeli opisuje informacje o jednym obiekcie. Wiersz składa się z pól opisujących cechy obiektu (atrybutów).
-  
-  ### Atrybut
-  > jest to kolumna zawierająca dane jednego określonego typu.
-  
-  ### Kwerenda
-  > to zapytanie umożliwiające wyświetlenie pól i rekordów z tabel według kryterium ustalonego przez użytkownika. Kwerenda służy też do porządkowania danych, wykonywania obliczeń i aktualizacji danych.
-  
-  ### Formularz
-  > to obiekt, który upraszcza proces wprowadzania i aktualizacji danych.
-  
-  ### Raport
-  > to prezentacja wybranych informacji z bazy danych. Raporty wykonuje się zazwyczaj w formie wydruku.
-  
-  ### Relacje (związki)
-  > to zależności między tabelami umożliwiające ich logiczne powiązanie ze sobą.
+</div>
 
-  > Typy relacji:
-  > - ``Jeden-do-jednego`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowany dokładnie jeden rekord drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowany dokładnie jeden rekord pierwszej tabeli, np. jeden przelew bankowy ma przyporządkowany jeden kod jednorazowy i odwrotnie.
-  > - ``Jeden-do-wielu`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowanych wiele rekordów drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowany dokładnie jeden rekord pierwszej tabeli, np. jeden wychowawca ma wielu uczniów, ale uczeń ma jednego wychowawcę.
-  > - ``Wiele-do-wielu`` - polega na tym, że jednemu rekordowi pierwszej tabeli jest przyporządkowanych wiele rekordów drugiej tabeli, a jednemu rekordowi drugiej tabeli jest przyporządkowanych wiele rekordów pierwszej tabeli, np. jeden nauczyciel uczy wielu uczniów, a każdy uczeń ma wielu nauczycieli.
-  
-  ### Klucz główny (podstawowy)
-  > to unikatowa nazwa pola (używa się nazwy ID – np. ID imię)- typ pola autonumerowanie. Każdy rekord w tabeli musi mieć swój unikatowy numer.
-  
-  ### Klucz obcy
-  > atrybut jest kluczem obcym dla danej tabeli, jeśli nie jest jej kluczem podstawowym, ale jej wartości są wartościami klucza podstawowego innej tabeli.
+## 🚧 Encje projektu:
+
+1. ``Nauczyciele`` - tabela zawierająca informacje o nauczycielach, np. imię, nazwisko, data urodzenia, przedmioty nauczane, adres, numer telefonu, adres e-mail.
+2. ``Uczniowie`` - tabela zawierająca informacje o uczniach, np. imię, nazwisko, klasa, adres, numer telefonu, adres e-mail, dane rodziców.
+3. ``Przedmioty`` - tabela zawierająca informacje o przedmiotach, np. nazwa, opis, nauczyciel prowadzący.
+4. ``Klasy`` - tabela zawierająca informacje o klasach, np. nazwa, rok szkolny, wychowawca klasy.
+5. ``Oceny`` - tabela zawierająca informacje o ocenach, np. data wystawienia, przedmiot, uczeń, wartość oceny.
+
+### 🔗 Powiązania między encjami:
+
+- Jeden nauczyciel może prowadzić jeden przedmiot. W tabeli przedmioty znajduje się klucz obcy do tabeli nauczyciele.
+- Każda klasa może mieć jednego wychowawcę, ale jeden nauczyciel może być wychowawcą wielu klas. W tabeli klasy znajduje się klucz obcy do tabeli nauczyciele.
+- Każdy uczeń jest przypisany do jednej klasy, ale jedna klasa może mieć wielu uczniów. W tabeli uczniowie znajduje się klucz obcy do tabeli klasy.
+- Każda ocena jest przypisana do jednego ucznia i jednego przedmiotu. W tabeli oceny znajdują się klucze obce do tabeli uczniowie i przedmioty.
+
+> Taki schemat bazy danych pozwoli na przechowywanie i zarządzanie informacjami o nauczycielach, uczniach, przedmiotach, klasach oraz ocenach w sposób uporządkowany i efektywny.
+
+## 🌟 Zadania do wykonania
+
+> Zapytania DDL oraz DML muszą znajdować się w oddzielnych plikach tekstowych o nazwie ``[nazwisko]_DDL.txt`` i ``[nazwisko]_DML.txt``.
  
-  ### Typy danych
-  > - Liczby całkowite - ``INT``, ``TINYINT``.
-  > - Liczby rzeczywiste - ``FLOAT``, ``DECIMAL``
-  > - Czasowe - ``DATETIME``, ``DATE``, ``TIME``.
-  > - Ciągi znaków - ``CHAR``, ``VARCHAR``, ``BLOB``
+###### W przeciwnym wypadku nie zostaną poddane ocenie pozytywnej.
 
-  ### Język manipulacji danych (ang. ``Data Manipulation Language``)
-  > zbiór instrukcji języka zapytań używanych do przetwarzania danych z bazy danych. Są to instrukcje takie jak: ``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE``.
+### 🏗️ Zapytania DDL
+<sup><sup><sup>(rogal to beztalencie)</sup></sup></sup>
 
-  > <div align="right"><sub>1.1 Listing - Przykładowa składnia instrukcji SELECT</sub></div>
-  ```sql
-  SELECT atrybut FROM nazwa_tabeli  
-  WHERE [warunki_wyszukiwania] 
-  ORDER BY [ASC / DESC], 
-  LIMIT ilość_wierszy;
-  ```
+- Encja ``Nauczyciele``:
 
-  > <div align="right"><sub>1.2 Listing - Przykładowa składnia instrukcji INSERT</sub></div>
-  ```sql
-  INSERT INTO nazwa_tabeli VALUES ('Przykład', 69); 
-  INSERT INTO nazwa_tabeli (atrybut, atrybut...) VALUES ('Przykład', 69); 
-  ```
+    - Utwórz tabelę ``nauczyciele`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), imie (typ danych VARCHAR), nazwisko (typ danych VARCHAR), data urodzenia (typ danych DATE), adres (typ danych VARCHAR), numer_telefonu (typ danych VARCHAR), email (typ danych VARCHAR).
 
-  > <div align="right"><sub>1.3 Listing - Przykładowa składnia instrukcji UPDATE</sub></div>
-  ```sql
-  UPDATE nazwa_tabeli SET atrybut = 'nowa_wartość' WHERE [warunek_wyszukania];
-  ```
+    - Ustaw wartość ``id`` jako klucz główny tabeli ``nauczyciele``.
 
-  > <div align="right"><sub>1.4 Listing - Przykładowa składnia instrukcji DELETE</sub></div>
-  ```sql
-  DELETE FROM nazwa_tabeli WHERE [warunek_wyszukania];
-  ```
+- Encja ``Uczniowie``:
 
-  ### Język definicji danych (ang. ``Data Definition Language``)
-  > zbiór instrukcji języka zapytań używanych do definiowania struktur danych. Możemy do nich zaliczyć polecenia takie jak ``CREATE``, ``ALTER``, ``DROP``. Za pomocą instrukcji ``DDL`` osoba nie manipuluje bezpośrednio danymi, a ich strukturą. Można zdefiniować kolumny tabel, zmienić typy danych, czy usunąć obiekt taki jak widok, czy tabela.
+    - Utwórz tabelę ``uczniowie`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), imie (typ danych VARCHAR), nazwisko (typ danych VARCHAR), klasa (typ danych VARCHAR), data urodzenia (typ danych DATE), adres (typ danych VARCHAR), numer_telefonu (typ danych VARCHAR), email (typ danych VARCHAR), imiona_rodzicow (typ danych VARCHAR), srednia (typ danych FLOAT).
 
-  > <div align="right"><sub>1.5 Listing - Przykładowa składnia instrukcji CREATE</sub></div>
-  ```sql
-  CREATE DATABASE nazwa_bazy;
+    - Ustaw wartość ``id`` jako klucz główny tabeli ``uczniowie``.
 
-  CREATE TABLE nazwa_tabeli (
-    [ struktura_tabeli ]
-  );
-  ```
+- Encja ``Przedmioty``:
 
-  > <div align="right"><sub>1.6 Listing - Przykładowa składnia instrukcji ALTER</sub></div> 
-  ```sql
-  ALTER TABLE nazwa_tabeli [ADD / MODIFY / RENAME / DROP] atrybut;
-  ```
+    - Utwórz tabelę ``przedmioty`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), nazwa (typ danych VARCHAR), opis (typ danych VARCHAR), nauczyciel_prowadzacy (klucz obcy, typ danych INT).
+    Ustaw wartość ``id`` jako klucz główny tabeli ``przedmioty``.
 
-  > <div align="right"><sub>1.7 Listing - Przykładowa składnia instrukcji DROP</sub></div>
-  ```sql
-  DROP TABLE nazwa_tabeli;
+    - Utwórz klucz obcy ``nauczyciel_prowadzacy`` w tabeli ``przedmioty`` odwołujący się do pola ``id`` w tabeli ``nauczyciele``.
 
-  DROP DATABASE nazwa_bazy;
-  ```
+- Encja ``Klasy``:
 
-  ### Wyzwalacz
-  > jest to skrypt (fragment kodu) wykonywany w przypadku zajścia jakiegoś zdarzenia w bazie danych (np. dodania danych, ich modyfikacji, czy usunięcia).
-  
-  > Typy wyzwalaczy:
-  > - ``AFTER DELETE`` – wykonanie wyzwalacza po operacji usunięcia rekordu.
-  > - ``AFTER INSERT`` – wykonanie wyzwalacza po dodaniu rekordu.
-  > - ``AFTER UPDATE`` – wykonanie wyzwalacza po zmodyfikowaniu rekordu.
+    - Utwórz tabelę ``klasy`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), nazwa (typ danych VARCHAR), rok_szkolny (typ danych VARCHAR), wychowawca (klucz obcy, typ danych INT).
 
-  > - ``BEFORE DELETE`` – wykonanie wyzwalacza przed operacji usunięcia rekordu.
-  > - ``BEFORE INSERT``  – wykonanie wyzwalacza przed dodaniu rekordu.
-  > - ``BEFORE UPDATE`` – wykonanie wyzwalacza przed zmodyfikowaniu rekordu.
-  
-  > <div align="right"><sub>1.8 Listing - Przykładowa składnia wyzwalacza</sub></div>
-  ```sql
-  CREATE TRIGGER nazwa_wyzwalacza
-  BEFORE INSERT ON
-  nazwa_tabeli 
-  FOR EACH ROW BEGIN
-  ...  
-  END
-  ```
-  
-  ### Procedura
-  > pozwalają zdefiniować dowolne zapytanie i wywołać je za pomocą komendy ``EXEC`` nazwa_procedury. Zmienne lokalne, globalne i parametry funkcji i procedur oznaczamy poprzez ``@`` i typ zmiennej.
-  
-  > <div align="right"><sub>1.9 Listing - Przykładowa procedura</sub></div>
-  ```sql
-  CREATE PROCEDURE nazwa_procedury @zmienna int
-  AS
-  SELECT * FROM nazwa_tabeli WHERE id = @zmienna;
+    - Utwórz klucz obcy ``wychowawca`` w tabeli ``klasy`` odwołujący się do pola ``id`` w tabeli ``nauczyciele``.
 
-  EXEC nazwa_procedury 10
-  ```
-  
+- Encja ``Oceny``:
+
+    - Utwórz tabelę ``oceny`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), data_wystawienia (typ danych DATE), przedmiot (klucz obcy, typ danych INT), uczen (klucz obcy, typ danych INT), wartosc (typ danych INT).
+
+    - Ustaw wartość ``id`` jako klucz główny tabeli ``oceny``.
+
+    - Utwórz klucz obcy ``przedmiot`` w tabeli ``oceny`` odwołujący się do pola ``id`` w tabeli ``przedmioty``.
+
+    - Utwórz klucz obcy ``uczen`` w tabeli ``oceny`` odwołujący się do pola ``id`` w tabeli ``uczniowie``.
+
+### 🔧 Zapytania DML
+
+
+- Encja ``Nauczyciele``:
+
+    - Dodaj ``10`` nowych krotek z danymi spełniającymi wymogi struktury tabeli.
+    
+    - Zmodyfikuj dane ``3`` dowolnych nauczycieli.
+
+    - Usuń dowolnego nauczyciela nauczającego ``Geografii``.
+
+    - Wyświetl imie, nazwisko oraz adres e-mail nauczycieli, których wiek przekracza 30 lat.
+
+    - Wybierz wszystkich nauczycieli, którzy uczą przedmiotu ``Matematyka`` lub ``Fizyka``.
+
+- Encja ``Uczniowie``:
+
+    - Dodaj ``10`` nowych krotek z danymi spełniającymi wymogi struktury tabeli.
+
+    - Wyświetl 3 najlepszych uczniów z najwyższą średnią.
+
+    - Zmień klasę ucznia o dowolnym id na ``3B``.
+
+    - Wybierz wszystkich uczniów, którzy uzyskali ocenę wyższą niż 4 z przedmiotu matematyka.
+
+    - Wybierz imiona i nazwiska uczniów oraz średnią ich ocen z przedmiotu język polski, posortowane malejąco według średniej ocen.
+
+- Encja ``Przedmioty``:
+
+    - Dodaj ``10`` nowych krotek z danymi spełniającymi wymogi struktury tabeli.
+
+    - Wybierz wszystkie przedmioty, których opis zawiera słowo ``programowanie``.
+
+    - Wybierz przedmioty, których nazwa zaczyna się na literę ``M`` lub ``P``.
+
+    - 🌟 Stwórz zapytanie wybierające nazwy przedmiotów, które mają średnią ocen powyżej ``4.5`` oraz prowadzone są przez nauczyciela o nazwisku zaczynającym się na ``Ko``.
+
+- Encja ``Klasy``:
+
+    - Dodaj ``10`` nowych krotek z danymi spełniającymi wymogi struktury tabeli.
+
+    - Znajdź wszystkie klasy, które nie mają wychowawcy.
+
+    - Wybierz wszystkie klasy, których wychowawca jest nauczycielem matematyki.
+
+    - 🌟 Wybierz wszystkie klasy, których nazwa zaczyna się od litery ``A`` i które mają co najmniej ``30`` uczniów.
+
+
+- Encja ``Oceny``:
+
+    - 🌟 Utwórz wyzwalacz zliczający średnią z ocen dla każdego ucznia. 
+
+    - Dodaj ``20`` nowych krotek z danymi spełniającymi wymogi struktury tabeli.
+
+    - Zaktualizuj ``5`` dowolnych ocen. 
+
+    - Wybierz średnią wartość ocen z przedmiotu o id ``3``.
+
+    - Wybierz wszystkie oceny wystawione uczniowi o id ``5`` wraz z nazwą przedmiotu, datą wystawienia i wartością oceny.
+
+    - Wybierz listę uczniów, którzy otrzymali ocenę niższą niż ``3`` z przedmiotu o nazwie ``Matematyka``.
