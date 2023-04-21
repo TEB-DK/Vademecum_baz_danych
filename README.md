@@ -6,7 +6,7 @@
 
 ## 🚧 Encje projektu:
 
-1. ``Nauczyciele`` - tabela zawierająca informacje o nauczycielach, np. imię, nazwisko, data urodzenia, przedmioty nauczane, adres, numer telefonu, adres e-mail.
+1. ``Nauczyciele`` - tabela zawierająca informacje o nauczycielach, np. imię, nazwisko, data urodzenia, przedmiot nauczany, adres, numer telefonu, adres e-mail.
 2. ``Uczniowie`` - tabela zawierająca informacje o uczniach, np. imię, nazwisko, klasa, adres, numer telefonu, adres e-mail, dane rodziców.
 3. ``Przedmioty`` - tabela zawierająca informacje o przedmiotach, np. nazwa, opis, nauczyciel prowadzący.
 4. ``Klasy`` - tabela zawierająca informacje o klasach, np. nazwa, rok szkolny, wychowawca klasy.
@@ -30,9 +30,11 @@
 ### 🏗️ Zapytania DDL
 <sup><sup><sup>(rogal to beztalencie)</sup></sup></sup>
 
+###### Wartości typów danych powinny być ZOPTYMALIZOWANE, tj. jeżeli wystepuje atrybut nazwisko to należy wyszukać najdłuższe europejskie/polskie nazwisko i wprowadzić odpowiednią liczbę znaków w typie VARCHAR.
+
 - Encja ``Nauczyciele``:
 
-    - Utwórz tabelę ``nauczyciele`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), imie (typ danych VARCHAR), nazwisko (typ danych VARCHAR), data urodzenia (typ danych DATE), adres (typ danych VARCHAR), numer_telefonu (typ danych VARCHAR), email (typ danych VARCHAR).
+    - Utwórz tabelę ``nauczyciele`` z polami: id (klucz główny, typ danych INT, auto inkrementacja), imie (typ danych VARCHAR), nazwisko (typ danych VARCHAR), data urodzenia (typ danych DATE), adres (typ danych VARCHAR), numer_telefonu (typ danych VARCHAR), email (typ danych VARCHAR), przedmiot_nauczany (typ danych VARCHAR).
 
     - Ustaw wartość ``id`` jako klucz główny tabeli ``nauczyciele``.
 
