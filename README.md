@@ -25,12 +25,12 @@
 
 > Zapytania DDL oraz DML muszą znajdować się w oddzielnych plikach tekstowych o nazwie ``[nazwisko]_DDL.txt`` i ``[nazwisko]_DML.txt``.
  
-###### W przeciwnym wypadku nie zostaną poddane ocenie pozytywnej.
+###### ❗ W przeciwnym wypadku nie zostaną poddane ocenie pozytywnej.
 
 ### 🏗️ Zapytania DDL
 <sup><sup><sup>(rogal to beztalencie)</sup></sup></sup>
 
-###### Wartości typów danych powinny być ZOPTYMALIZOWANE, tj. jeżeli wystepuje atrybut nazwisko to należy wyszukać najdłuższe europejskie/polskie nazwisko i wprowadzić odpowiednią liczbę znaków w typie VARCHAR.
+###### ❗ Wartości typów danych powinny być ZOPTYMALIZOWANE, tj. jeżeli wystepuje atrybut nazwisko to należy wyszukać najdłuższe europejskie/polskie nazwisko i wprowadzić odpowiednią liczbę znaków w typie VARCHAR.
 
 - Encja ``Nauczyciele``:
 
