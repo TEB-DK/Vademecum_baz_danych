@@ -27,7 +27,7 @@
  
 ###### ❗ W przeciwnym wypadku nie zostaną poddane ocenie pozytywnej.
 
-### 🏗️ Zapytania DDL
+### 🏗️ Zapytania DDL (30% + wypełnienie)
 <sup><sup><sup>(rogal to beztalencie)</sup></sup></sup>
 
 ###### ❗ Wartości typów danych powinny być ZOPTYMALIZOWANE, tj. jeżeli wystepuje atrybut nazwisko to należy wyszukać najdłuższe europejskie/polskie nazwisko i wprowadzić odpowiednią liczbę znaków w typie VARCHAR.
@@ -67,7 +67,7 @@
 
     - Utwórz klucz obcy ``uczen`` w tabeli ``oceny`` odwołujący się do pola ``id`` w tabeli ``uczniowie``.
 
-### 🔧 Zapytania DML
+### 🔧 Zapytania DML ( 70% + gwiazdki)
 
 
 - Encja ``Nauczyciele``:
