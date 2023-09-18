@@ -416,6 +416,46 @@
 
        - Zlicz liczbę zamówień przypadającą każdemu z pracowników i wyświetl dodatkowo ich datę urodzenia. Wynik posortuj względem liczby zamówień malejąco.
 
+  8. Wypisz listę kategorii z największą liczbą produktów wśród których, średnia cena jest wyższa niż średnia cena wszystkich produktów.
+     
+     <details>
+       <summary>Oczekiwany wynik</summary>
+       
+      ![obraz](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/da4d2f9c-c43c-405e-be30-f318de117aed)
+
+     </details>
+     
+  9. Wypisz klientów, którzy złożyli najwięcej zamówień w określonym przedziale dat (od 1990-01-01 do 2000-01-01), a także podaj pracownika, który obsłużył każde z tych zamówień.
+
+      <details>
+       <summary>Oczekiwany wynik</summary>
+       
+      ![obraz](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/dd0f5b8b-b517-450d-b4e0-c23d50998c54)
+       
+      </details>
+
+  10. Znajdź produkty, które były najlepiej sprzedającymi się w danym roku kalendarzowym (np. 1996).
+
+      <details>
+       <summary>Oczekiwany wynik</summary>
+       
+      ![obraz](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/1f242948-5a56-484c-bd88-87498840d0ee)
+
+      </details>
+  11. Wybierz produkty z najwyższym średnim zamówieniem z uwzględnieniem kategorii.
+      <details>
+       <summary>Oczekiwany wynik</summary>
+       
+      ![obraz](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/ef621851-f631-451f-8f21-203ba953711d)
+
+      </details>
+  12. Wypisz klientów z największą liczbą zamówień w określonym okresie czasu z uwzględnieniem kraju.
+      <details>
+       <summary>Oczekiwany wynik</summary>
+       
+      ![obraz](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/8cda1939-a582-45ce-b543-c32664e62625)
+
+      </details>    
   ## Zapytania ``INSERT``
   > Polecenie to wykorzystywane jest do wprowadzania danych do encji.
   
