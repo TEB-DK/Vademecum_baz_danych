@@ -531,7 +531,7 @@
 - Utwórz bazę danych na podstawie przedstawionego schematu za pomocą `DDL`, pamietając o zasadzie optymalizacji atrybutów.
 - Następnie dokonaj wprowadzenia danych do bazy
     - Każda encji ma posiadać co najmniej 10 różnorodnych krotek
-#### **Polecenie (PHP) 🐘**
+#### [ **Polecenie (PHP) 🐘** ](https://github.com/TEB-DK/Domena_aplikacji_internetowych/tree/Język-PHP#obsługa-bazy-danych-w-php)
 - Utwórz prosty panel logowania składający się z pól do wprowadzenia loginu i hasła
     - Login pracownika będzie następujący: `[pierwsze_imie][id_pracownika]`
     - Hasło pracownika będzie następujące: `[nazwisko][data_zatrudnienia]`
