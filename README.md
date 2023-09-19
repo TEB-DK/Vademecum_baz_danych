@@ -539,6 +539,10 @@
     - Login pracownika będzie następujący: `[pierwsze_imie][id_pracownika]`
     - Hasło pracownika będzie następujące: `[nazwisko][data_zatrudnienia]`
 - Po poprawnym zalogowaniu, użytkownik będzie przeniesiony na stronę panelu administracyjnego restauracji
+
+    ![image](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/74f30f17-bb10-4f9c-9e61-b453bc638287)
+
+    
     - `Panel_1` -> będzie składał się z prostej listy bloków zawierających informacje o rezerwacji i pracowniku, który do rezerwacji jest przydzielony.
     - `Panel_2` -> będzie składał się z listy zamówień do odpowiedniej rezerwacji, ma posiadać ten sam kolor co bloczek rezerwacji.
     - `Panel_3` -> będzie wyświetlał produkty, ich ceny i kategorie produktów, które są dostępne.
