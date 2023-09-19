@@ -533,6 +533,9 @@
     - Każda encji ma posiadać co najmniej 10 różnorodnych krotek
 #### [ **Polecenie (PHP) 🐘** ](https://github.com/TEB-DK/Domena_aplikacji_internetowych/tree/Język-PHP#obsługa-bazy-danych-w-php)
 - Utwórz prosty panel logowania składający się z pól do wprowadzenia loginu i hasła
+
+    ![image](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/74913384-d9ca-4aee-a1a4-ca2f420d8bd9)
+
     - Login pracownika będzie następujący: `[pierwsze_imie][id_pracownika]`
     - Hasło pracownika będzie następujące: `[nazwisko][data_zatrudnienia]`
 - Po poprawnym zalogowaniu, użytkownik będzie przeniesiony na stronę panelu administracyjnego restauracji
