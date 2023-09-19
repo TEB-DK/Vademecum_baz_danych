@@ -516,3 +516,26 @@
   </details>
 
   ---
+  
+<div align='center'>
+    
+## Sushi bar 🍣
+
+#### 🍣🍣🍣🍣🍣🍣
+
+![image](https://github.com/TEB-DK/Vademecum_baz_danych/assets/125214141/b68e6d16-2bf8-4a72-8abc-5808f5939054)
+
+</div>
+
+#### **Polecenie (MySQL) 📑**
+- Utwórz bazę danych na podstawie przedstawionego schematu za pomocą `DDL`, pamietając o zasadzie optymalizacji atrybutów.
+- Następnie dokonaj wprowadzenia danych do bazy
+    - Każda encji ma posiadać co najmniej 10 różnorodnych krotek
+#### **Polecenie (PHP) 🐘**
+- Utwórz prosty panel logowania składający się z pól do wprowadzenia loginu i hasła
+    - Login pracownika będzie następujący: `[pierwsze_imie][id_pracownika]`
+    - Hasło pracownika będzie następujące: `[nazwisko][data_zatrudnienia]`
+- Po poprawnym zalogowaniu, użytkownik będzie przeniesiony na stronę panelu administracyjnego restauracji
+    - `Panel_1` -> będzie składał się z prostej listy bloków zawierających informacje o rezerwacji i pracowniku, który do rezerwacji jest przydzielony.
+    - `Panel_2` -> będzie składał się z listy zamówień do odpowiedniej rezerwacji, ma posiadać ten sam kolor co bloczek rezerwacji.
+    - `Panel_3` -> będzie wyświetlał produkty, ich ceny i kategorie produktów, które są dostępne.
